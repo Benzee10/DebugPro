@@ -1,161 +1,170 @@
 import type { GalleryPost, Model, GalleryData } from '@shared/schema';
 
-// Sample data that follows the markdown structure
+// Mila Azul gallery posts
 export const sampleGalleryPosts: GalleryPost[] = [
   {
-    slug: "mila/summer-bliss",
-    title: "Summer Bliss",
-    description: "Soft golden hour set showcasing natural beauty in warm evening light",
-    date: "2025-08-04T10:00:00",
-    tags: ["sunset", "outdoors", "golden-hour"],
-    model: "mila",
-    category: "Nature",
-    cover: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
+    slug: "mila-azul/lace-morning",
+    title: "Mila Azul in Metart X set Lace Morning 1",
+    description: "Mila Azul awakens your senses with soft lace and slow-burning seduction in this intimate morning shoot.",
+    date: "2025-07-26T10:00:00",
+    tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery"],
+    model: "mila-azul",
+    category: "Metart X",
+    cover: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg",
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
-        alt: "Golden hour portrait 1",
-        caption: "Soft natural lighting"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=900",
-        alt: "Golden hour portrait 2",
-        caption: "Evening glow"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1100",
-        alt: "Golden hour portrait 3",
-        caption: "Natural beauty"
-      }
+      { src: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg", alt: "Image 1" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-02_1200.jpg", alt: "Image 2" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-03_1200.jpg", alt: "Image 3" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-04_1200.jpg", alt: "Image 4" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-05_1200.jpg", alt: "Image 5" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-06_1200.jpg", alt: "Image 6" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-07_1800.jpg", alt: "Image 7" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-08_1200.jpg", alt: "Image 8" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-09_1200.jpg", alt: "Image 9" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-15_1200.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-18_1800.jpg", alt: "Image 18" }
     ]
   },
   {
-    slug: "lena/golden-dreams",
-    title: "Golden Dreams",
-    description: "Ethereal studio session with dramatic lighting and dreamy atmosphere",
-    date: "2025-07-28T14:30:00",
-    tags: ["studio", "portrait", "dramatic"],
-    model: "lena",
-    category: "Portrait",
-    cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
+    slug: "mila-azul/candy-kiss",
+    title: "Mila Azul in Metart set Candy Kiss",
+    description: "Mila Azul turns up the sweetness and seduction in Metart's gorgeous new gallery — Candy Kiss.",
+    date: "2025-07-27T23:51:00",
+    tags: ["Mila Azul", "Candy Kiss", "Metart", "Gallery", "Erotic Beauty"],
+    model: "mila-azul",
+    category: "Metart",
+    cover: "https://cdn.elitebabes.com/content/250766/0034-01_1200.jpg",
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
-        alt: "Studio portrait 1",
-        caption: "Dramatic lighting"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1100",
-        alt: "Studio portrait 2",
-        caption: "Ethereal mood"
-      }
+      { src: "https://cdn.elitebabes.com/content/250766/0034-01_1200.jpg", alt: "Image 1" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-02_1200.jpg", alt: "Image 2" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-03_1200.jpg", alt: "Image 3" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-04_1200.jpg", alt: "Image 4" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-05_1200.jpg", alt: "Image 5" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-06_1200.jpg", alt: "Image 6" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-07_1200.jpg", alt: "Image 7" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-08_1200.jpg", alt: "Image 8" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-09_1200.jpg", alt: "Image 9" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-15_1800.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-18_1200.jpg", alt: "Image 18" }
     ]
   },
   {
-    slug: "mila/wild-flower",
-    title: "Wild Flower",
-    description: "Natural beauty captured among vibrant wildflowers in meadow setting",
-    date: "2025-07-15T09:15:00",
-    tags: ["flowers", "meadow", "natural"],
-    model: "mila",
-    category: "Nature",
-    cover: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=900",
+    slug: "mila-azul/schoolwork",
+    title: "Mila Azul in Metart set Schoolwork 1",
+    description: "Mila Azul turns homework into something seriously distracting — and dangerously sexy.",
+    date: "2025-07-29T17:10:00",
+    tags: ["Mila Azul", "Metart", "Schoolwork", "NSFW", "Study Seduction"],
+    model: "mila-azul",
+    category: "Metart",
+    cover: "https://cdn.elitebabes.com/content/250396/0010-01_1200.jpg",
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=900",
-        alt: "Wildflower portrait 1",
-        caption: "Among the flowers"
-      }
+      { src: "https://cdn.elitebabes.com/content/250396/0010-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-04_1800.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-15_1200.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-18_1200.jpg", alt: "Image 18" }
     ]
   },
   {
-    slug: "sofia/urban-elegance",
-    title: "Urban Elegance",
-    description: "Sophisticated city shoot blending modern architecture with timeless elegance",
-    date: "2025-07-10T16:00:00",
-    tags: ["urban", "fashion", "architecture"],
-    model: "sofia",
-    category: "Fashion",
-    cover: "https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1100",
+    slug: "mila-azul/shades-of-quiet",
+    title: "Mila Azul in Ultra Films set Shades of Quiet",
+    description: "Soft glances. Gentle poses. Mila Azul turns silence into pure sensual poetry.",
+    date: "2025-07-30T23:45:00",
+    tags: ["Mila Azul", "Ultra Films", "Shades of Quiet", "Nude Art", "NSFW"],
+    model: "mila-azul",
+    category: "Ultra Films",
+    cover: "https://cdn.elitebabes.com/content/250585/0007-01_1200.jpg",
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1100",
-        alt: "Urban portrait 1",
-        caption: "City elegance"
-      }
+      { src: "https://cdn.elitebabes.com/content/250585/0007-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-04_1200.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-15_1200.jpg", alt: "Image 15" }
     ]
   },
   {
-    slug: "lena/autumn-mood",
-    title: "Autumn Mood",
-    description: "Capturing the warmth and beauty of fall season with rich golden tones",
-    date: "2025-10-12T11:30:00",
-    tags: ["autumn", "warm", "seasonal"],
-    model: "lena",
-    category: "Nature",
-    cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800",
+    slug: "mila-azul/slick-skin-hot-rhythm",
+    title: "Mila Azul in Wow Girls set Slick Skin, Hot Rhythm",
+    description: "Slick skin, steady rhythm—Mila Azul's body sways like a symphony of temptation.",
+    date: "2025-07-30T23:55:00",
+    tags: ["Mila Azul", "Wow Girls", "Slick Skin", "Erotic Rhythm", "NSFW"],
+    model: "mila-azul",
+    category: "Wow Girls",
+    cover: "https://cdn.elitebabes.com/content/250665/0019-01_1200.jpg",
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800",
-        alt: "Autumn portrait 1",
-        caption: "Fall colors"
-      }
-    ]
-  },
-  {
-    slug: "mila/midnight-blue",
-    title: "Midnight Blue",
-    description: "Dramatic blue hour session with deep moods and cinematic lighting",
-    date: "2025-09-22T20:00:00",
-    tags: ["night", "dramatic", "cinematic"],
-    model: "mila",
-    category: "Portrait",
-    cover: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200",
-        alt: "Night portrait 1",
-        caption: "Blue hour mood"
-      }
+      { src: "https://cdn.elitebabes.com/content/250665/0019-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-04_1200.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-15_1200.jpg", alt: "Image 15" }
     ]
   }
 ];
 
 export const sampleModels: Model[] = [
   {
-    name: "Mila",
-    slug: "mila",
-    avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-    bio: "Professional model specializing in natural light photography and outdoor sessions.",
-    galleryCount: 8,
-    totalLikes: 156,
+    name: "Mila Azul",
+    slug: "mila-azul",
+    avatar: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg",
+    bio: "Stunning Ukrainian model featured in exclusive Metart, Ultra Films, and Wow Girls productions.",
+    galleryCount: 5,
+    totalLikes: 892,
     joinDate: "2024-01-15"
-  },
-  {
-    name: "Lena",
-    slug: "lena",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-    bio: "Studio and portrait specialist with expertise in dramatic lighting and artistic compositions.",
-    galleryCount: 6,
-    totalLikes: 123,
-    joinDate: "2024-02-20"
-  },
-  {
-    name: "Sofia",
-    slug: "sofia",
-    avatar: "https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-    bio: "Fashion and urban photography model with a focus on contemporary styling.",
-    galleryCount: 4,
-    totalLikes: 89,
-    joinDate: "2024-03-10"
   }
 ];
 
 export const galleryData: GalleryData = {
   posts: sampleGalleryPosts,
   models: sampleModels,
-  categories: ["Nature", "Portrait", "Fashion", "Studio"],
-  tags: ["sunset", "outdoors", "golden-hour", "studio", "portrait", "dramatic", "flowers", "meadow", "natural", "urban", "fashion", "architecture", "autumn", "warm", "seasonal", "night", "cinematic"]
+  categories: ["Metart X", "Metart", "Ultra Films", "Wow Girls"],
+  tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery", "Candy Kiss", "Erotic Beauty", "Schoolwork", "NSFW", "Study Seduction", "Shades of Quiet", "Nude Art", "Slick Skin", "Erotic Rhythm"]
 };
 
 export function getGalleryPost(slug: string): GalleryPost | undefined {

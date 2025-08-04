@@ -21,6 +21,7 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
   
   const getModelColor = (model: string) => {
     const colors = {
+      "mila-azul": "from-pink-400 to-rose-500",
       mila: "from-orange-400 to-pink-500",
       lena: "from-purple-400 to-blue-500",
       sofia: "from-indigo-400 to-cyan-500"
@@ -30,6 +31,10 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
 
   const getCategoryColor = (category: string) => {
     const colors = {
+      "Metart X": "bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300",
+      "Metart": "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300",
+      "Ultra Films": "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300",
+      "Wow Girls": "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300",
       Nature: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300",
       Portrait: "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300",
       Fashion: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300",
@@ -75,8 +80,8 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
                 </span>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white capitalize">
-                  {post.model}
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  {post.model === "mila-azul" ? "Mila Azul" : post.model}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   {formattedDate}

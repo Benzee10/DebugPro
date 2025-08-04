@@ -1,6 +1,13 @@
 # Overview
 
-Shiny Dollop is a modern React-based static gallery blog application designed to showcase curated photo collections. The application follows a gallery-first approach where each collection is organized by model and theme, with content managed through markdown files. Built as a full-stack application with Express.js backend and React frontend, it provides both static site generation capabilities and dynamic API endpoints for content management.
+Shiny Dollop is a modern React-based static gallery blog application featuring Mila Azul photo collections from premium studios. The application follows a gallery-first approach where each collection is organized by model and production studio, with content managed through markdown files. Built as a full-stack application with Express.js backend and React frontend, it provides both static site generation capabilities and dynamic API endpoints for content management.
+
+## Recent Changes (August 2025)
+- Replaced sample data with 5 Mila Azul gallery posts from Metart X, Metart, Ultra Films, and Wow Girls
+- Updated model structure to focus on single model (Mila Azul) with professional studio content
+- Added support for new category types: Metart X, Metart, Ultra Films, Wow Girls
+- Updated gallery card styling to handle new model and category color schemes
+- Created new markdown file structure under data/mila-azul/ with proper slugs
 
 # User Preferences
 
