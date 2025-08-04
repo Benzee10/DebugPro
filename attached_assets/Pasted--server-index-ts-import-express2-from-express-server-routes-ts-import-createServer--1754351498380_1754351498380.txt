@@ -1,0 +1,480 @@
+// server/index.ts
+import express2 from "express";
+
+// server/routes.ts
+import { createServer } from "http";
+
+// client/src/lib/gallery-data.ts
+var sampleGalleryPosts = [
+  {
+    slug: "mila-azul/lace-morning",
+    title: "Mila Azul in Metart X set Lace Morning 1",
+    description: "Mila Azul awakens your senses with soft lace and slow-burning seduction in this intimate morning shoot.",
+    date: "2025-07-26T10:00:00",
+    tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery"],
+    model: "mila-azul",
+    category: "Metart X",
+    cover: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg",
+    images: [
+      { src: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg", alt: "Image 1" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-02_1200.jpg", alt: "Image 2" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-03_1200.jpg", alt: "Image 3" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-04_1200.jpg", alt: "Image 4" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-05_1200.jpg", alt: "Image 5" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-06_1200.jpg", alt: "Image 6" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-07_1800.jpg", alt: "Image 7" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-08_1200.jpg", alt: "Image 8" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-09_1200.jpg", alt: "Image 9" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-15_1200.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250746/0004-18_1800.jpg", alt: "Image 18" }
+    ]
+  },
+  {
+    slug: "mila-azul/candy-kiss",
+    title: "Mila Azul in Metart set Candy Kiss",
+    description: "Mila Azul turns up the sweetness and seduction in Metart's gorgeous new gallery \u2014 Candy Kiss.",
+    date: "2025-07-27T23:51:00",
+    tags: ["Mila Azul", "Candy Kiss", "Metart", "Gallery", "Erotic Beauty"],
+    model: "mila-azul",
+    category: "Metart",
+    cover: "https://cdn.elitebabes.com/content/250766/0034-01_1200.jpg",
+    images: [
+      { src: "https://cdn.elitebabes.com/content/250766/0034-01_1200.jpg", alt: "Image 1" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-02_1200.jpg", alt: "Image 2" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-03_1200.jpg", alt: "Image 3" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-04_1200.jpg", alt: "Image 4" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-05_1200.jpg", alt: "Image 5" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-06_1200.jpg", alt: "Image 6" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-07_1200.jpg", alt: "Image 7" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-08_1200.jpg", alt: "Image 8" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-09_1200.jpg", alt: "Image 9" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-15_1800.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250766/0034-18_1200.jpg", alt: "Image 18" }
+    ]
+  },
+  {
+    slug: "mila-azul/schoolwork",
+    title: "Mila Azul in Metart set Schoolwork 1",
+    description: "Mila Azul turns homework into something seriously distracting \u2014 and dangerously sexy.",
+    date: "2025-07-29T17:10:00",
+    tags: ["Mila Azul", "Metart", "Schoolwork", "NSFW", "Study Seduction"],
+    model: "mila-azul",
+    category: "Metart",
+    cover: "https://cdn.elitebabes.com/content/250396/0010-01_1200.jpg",
+    images: [
+      { src: "https://cdn.elitebabes.com/content/250396/0010-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-04_1800.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-15_1200.jpg", alt: "Image 15" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-16_1200.jpg", alt: "Image 16" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-17_1200.jpg", alt: "Image 17" },
+      { src: "https://cdn.elitebabes.com/content/250396/0010-18_1200.jpg", alt: "Image 18" }
+    ]
+  },
+  {
+    slug: "mila-azul/shades-of-quiet",
+    title: "Mila Azul in Ultra Films set Shades of Quiet",
+    description: "Soft glances. Gentle poses. Mila Azul turns silence into pure sensual poetry.",
+    date: "2025-07-30T23:45:00",
+    tags: ["Mila Azul", "Ultra Films", "Shades of Quiet", "Nude Art", "NSFW"],
+    model: "mila-azul",
+    category: "Ultra Films",
+    cover: "https://cdn.elitebabes.com/content/250585/0007-01_1200.jpg",
+    images: [
+      { src: "https://cdn.elitebabes.com/content/250585/0007-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-04_1200.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250585/0007-15_1200.jpg", alt: "Image 15" }
+    ]
+  },
+  {
+    slug: "mila-azul/slick-skin-hot-rhythm",
+    title: "Mila Azul in Wow Girls set Slick Skin, Hot Rhythm",
+    description: "Slick skin, steady rhythm\u2014Mila Azul's body sways like a symphony of temptation.",
+    date: "2025-07-30T23:55:00",
+    tags: ["Mila Azul", "Wow Girls", "Slick Skin", "Erotic Rhythm", "NSFW"],
+    model: "mila-azul",
+    category: "Wow Girls",
+    cover: "https://cdn.elitebabes.com/content/250665/0019-01_1200.jpg",
+    images: [
+      { src: "https://cdn.elitebabes.com/content/250665/0019-01_1200.jpg", alt: "Image 01" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-02_1200.jpg", alt: "Image 02" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-03_1200.jpg", alt: "Image 03" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-04_1200.jpg", alt: "Image 04" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-05_1200.jpg", alt: "Image 05" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-06_1200.jpg", alt: "Image 06" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-07_1200.jpg", alt: "Image 07" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-08_1200.jpg", alt: "Image 08" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-09_1200.jpg", alt: "Image 09" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-10_1200.jpg", alt: "Image 10" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-11_1200.jpg", alt: "Image 11" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-12_1200.jpg", alt: "Image 12" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-13_1200.jpg", alt: "Image 13" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-14_1200.jpg", alt: "Image 14" },
+      { src: "https://cdn.elitebabes.com/content/250665/0019-15_1200.jpg", alt: "Image 15" }
+    ]
+  }
+];
+var sampleModels = [
+  {
+    name: "Mila Azul",
+    slug: "mila-azul",
+    avatar: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg",
+    bio: "Stunning Ukrainian model featured in exclusive Metart, Ultra Films, and Wow Girls productions.",
+    galleryCount: 5,
+    totalLikes: 892,
+    joinDate: "2024-01-15"
+  }
+];
+var galleryData = {
+  posts: sampleGalleryPosts,
+  models: sampleModels,
+  categories: ["Metart X", "Metart", "Ultra Films", "Wow Girls"],
+  tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery", "Candy Kiss", "Erotic Beauty", "Schoolwork", "NSFW", "Study Seduction", "Shades of Quiet", "Nude Art", "Slick Skin", "Erotic Rhythm"]
+};
+
+// client/src/lib/seo.ts
+function generateSitemap(baseUrl) {
+  const entries = [
+    {
+      url: baseUrl,
+      lastmod: (/* @__PURE__ */ new Date()).toISOString(),
+      changefreq: "daily",
+      priority: 1
+    }
+  ];
+  galleryData.posts.forEach((post) => {
+    entries.push({
+      url: `${baseUrl}/gallery/${post.slug}`,
+      lastmod: new Date(post.date).toISOString(),
+      changefreq: "monthly",
+      priority: 0.8
+    });
+  });
+  galleryData.models.forEach((model) => {
+    entries.push({
+      url: `${baseUrl}/model/${model.slug}`,
+      lastmod: (/* @__PURE__ */ new Date()).toISOString(),
+      changefreq: "weekly",
+      priority: 0.7
+    });
+  });
+  const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.map((entry) => `  <url>
+    <loc>${entry.url}</loc>
+    <lastmod>${entry.lastmod}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+  </url>`).join("\n")}
+</urlset>`;
+  return xmlContent;
+}
+function generateRSSFeed(baseUrl) {
+  const sortedPosts = [...galleryData.posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 20);
+  const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shiny Dollop - Premium Photo Galleries</title>
+    <description>Curated collections featuring Mila Azul from premium studios including Metart, Ultra Films, and Wow Girls</description>
+    <link>${baseUrl}</link>
+    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+    <language>en-us</language>
+    <lastBuildDate>${(/* @__PURE__ */ new Date()).toUTCString()}</lastBuildDate>
+    <generator>Shiny Dollop Gallery</generator>
+${sortedPosts.map((post) => `    <item>
+      <title><![CDATA[${post.title}]]></title>
+      <description><![CDATA[${post.description}]]></description>
+      <link>${baseUrl}/gallery/${post.slug}</link>
+      <guid>${baseUrl}/gallery/${post.slug}</guid>
+      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <category>${post.category}</category>
+      <enclosure url="${post.cover}" type="image/jpeg" length="0"/>
+    </item>`).join("\n")}
+  </channel>
+</rss>`;
+  return rssContent;
+}
+function generateSitemapIndex(baseUrl) {
+  const sitemapIndexContent = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${baseUrl}/sitemap.xml</loc>
+    <lastmod>${(/* @__PURE__ */ new Date()).toISOString()}</lastmod>
+  </sitemap>
+</sitemapindex>`;
+  return sitemapIndexContent;
+}
+
+// server/routes.ts
+async function registerRoutes(app2) {
+  app2.get("/api/galleries", async (req, res) => {
+    try {
+      const galleries = [
+        {
+          slug: "mila/summer-bliss",
+          title: "Summer Bliss",
+          description: "Soft golden hour set",
+          date: "2025-08-04T10:00:00",
+          tags: ["sunset", "outdoors"],
+          model: "mila",
+          category: "Nature",
+          cover: "01.jpg"
+        }
+      ];
+      res.json(galleries);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch galleries" });
+    }
+  });
+  app2.get("/api/galleries/:model/:slug", async (req, res) => {
+    try {
+      const { model, slug } = req.params;
+      res.json({ message: `Gallery ${model}/${slug} endpoint` });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch gallery" });
+    }
+  });
+  app2.get("/api/models", async (req, res) => {
+    try {
+      const models = [
+        {
+          name: "Mila",
+          slug: "mila",
+          galleryCount: 8,
+          totalLikes: 156
+        }
+      ];
+      res.json(models);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch models" });
+    }
+  });
+  app2.get("/sitemap.xml", (req, res) => {
+    try {
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const sitemap = generateSitemap(baseUrl);
+      res.set("Content-Type", "application/xml");
+      res.send(sitemap);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate sitemap" });
+    }
+  });
+  app2.get("/sitemap-index.xml", (req, res) => {
+    try {
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const sitemapIndex = generateSitemapIndex(baseUrl);
+      res.set("Content-Type", "application/xml");
+      res.send(sitemapIndex);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate sitemap index" });
+    }
+  });
+  app2.get("/rss.xml", (req, res) => {
+    try {
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const rssFeed = generateRSSFeed(baseUrl);
+      res.set("Content-Type", "application/rss+xml");
+      res.send(rssFeed);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate RSS feed" });
+    }
+  });
+  const httpServer = createServer(app2);
+  return httpServer;
+}
+
+// server/vite.ts
+import express from "express";
+import fs from "fs";
+import path2 from "path";
+import { createServer as createViteServer, createLogger } from "vite";
+
+// vite.config.ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+var vite_config_default = defineConfig({
+  plugins: [
+    react(),
+    runtimeErrorOverlay(),
+    ...process.env.NODE_ENV !== "production" && process.env.REPL_ID !== void 0 ? [
+      await import("@replit/vite-plugin-cartographer").then(
+        (m) => m.cartographer()
+      )
+    ] : []
+  ],
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "client", "src"),
+      "@shared": path.resolve(import.meta.dirname, "shared"),
+      "@assets": path.resolve(import.meta.dirname, "attached_assets")
+    }
+  },
+  root: path.resolve(import.meta.dirname, "client"),
+  build: {
+    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    emptyOutDir: true
+  },
+  server: {
+    fs: {
+      strict: true,
+      deny: ["**/.*"]
+    }
+  }
+});
+
+// server/vite.ts
+import { nanoid } from "nanoid";
+var viteLogger = createLogger();
+function log(message, source = "express") {
+  const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  });
+  console.log(`${formattedTime} [${source}] ${message}`);
+}
+async function setupVite(app2, server) {
+  const serverOptions = {
+    middlewareMode: true,
+    hmr: { server },
+    allowedHosts: true
+  };
+  const vite = await createViteServer({
+    ...vite_config_default,
+    configFile: false,
+    customLogger: {
+      ...viteLogger,
+      error: (msg, options) => {
+        viteLogger.error(msg, options);
+        process.exit(1);
+      }
+    },
+    server: serverOptions,
+    appType: "custom"
+  });
+  app2.use(vite.middlewares);
+  app2.use("*", async (req, res, next) => {
+    const url = req.originalUrl;
+    try {
+      const clientTemplate = path2.resolve(
+        import.meta.dirname,
+        "..",
+        "client",
+        "index.html"
+      );
+      let template = await fs.promises.readFile(clientTemplate, "utf-8");
+      template = template.replace(
+        `src="/src/main.tsx"`,
+        `src="/src/main.tsx?v=${nanoid()}"`
+      );
+      const page = await vite.transformIndexHtml(url, template);
+      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+    } catch (e) {
+      vite.ssrFixStacktrace(e);
+      next(e);
+    }
+  });
+}
+function serveStatic(app2) {
+  const distPath = path2.resolve(import.meta.dirname, "public");
+  if (!fs.existsSync(distPath)) {
+    throw new Error(
+      `Could not find the build directory: ${distPath}, make sure to build the client first`
+    );
+  }
+  app2.use(express.static(distPath));
+  app2.use("*", (_req, res) => {
+    res.sendFile(path2.resolve(distPath, "index.html"));
+  });
+}
+
+// server/index.ts
+var app = express2();
+app.use(express2.json());
+app.use(express2.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path3 = req.path;
+  let capturedJsonResponse = void 0;
+  const originalResJson = res.json;
+  res.json = function(bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path3.startsWith("/api")) {
+      let logLine = `${req.method} ${path3} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "\u2026";
+      }
+      log(logLine);
+    }
+  });
+  next();
+});
+(async () => {
+  const server = await registerRoutes(app);
+  app.use((err, _req, res, _next) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(status).json({ message });
+    throw err;
+  });
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+  }
+  const port = parseInt(process.env.PORT || "5000", 10);
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true
+  }, () => {
+    log(`serving on port ${port}`);
+  });
+})();
