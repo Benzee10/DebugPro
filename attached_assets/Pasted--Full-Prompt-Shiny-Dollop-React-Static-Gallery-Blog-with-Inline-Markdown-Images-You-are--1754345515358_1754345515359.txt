@@ -1,0 +1,99 @@
+### 📌 Full Prompt: Shiny Dollop – React Static Gallery Blog with Inline Markdown Images
+
+You are a senior frontend engineer. Build a fast, static image gallery blog called **“Shiny Dollop”** using **React + Vite**. The blog showcases curated photo albums using `index.md` Markdown files only — all images must be **referenced or embedded directly inside the Markdown**. Each post lives in a structured folder under `data/<model>/<slug>/`.
+
+---
+
+### ⚙️ Tech Stack
+
+- **Framework**: React + Vite
+- **Styling**: Tailwind CSS + `@tailwindcss/typography`
+- **Markdown Engine**: `gray-matter` + `remark` + `rehype`
+- **Routing**: React Router (or File-based via Vite plugins)
+- **Search**: Fuse.js or Pagefind
+- **Hosting**: Vercel/Netlify-ready
+
+---
+
+### 📁 Folder Structure (Organized by Model)
+
+```
+data/
+  mila/
+    wild-flower/
+      index.md       ← contains all metadata + image links
+    summer-bliss/
+      index.md
+  lena/
+    golden-dreams/
+      index.md
+```
+
+Each folder contains **only `index.md`**. Images are embedded using relative paths (e.g., `![01](./01.jpg)`) or `base64` if embedding raw.
+
+---
+
+### 🧱 Markdown Post Structure (`index.md`)
+
+```markdown
+---
+title: "Summer Bliss"
+description: "Soft golden hour set"
+date: "2025-08-04T10:00:00"
+tags: ["sunset", "outdoors"]
+model: "mila"
+category: "Nature"
+cover: "01.jpg"
+---
+
+See Full Pictures Here 👉🏼
+
+She doesn’t just pose — she *glows*...
+Golden hour never looked better.
+
+![01](./01.jpg)
+![02](./02.jpg)
+![03](./03.jpg)
+```
+
+✅ All post content and images live inside this one file (`index.md`), and are kept together in their own folder.
+
+---
+
+### ✨ Features
+
+- 🖼️ **Gallery Renderer**: Reads and renders inline `![caption](path)` images from Markdown
+- 💡 **Lightbox**: Fullscreen viewer on image click
+- 🔍 **Client-side Search**: Titles, tags, model names
+- 🌗 **Dark Mode + Accent Hue Slider**
+- 🔄 **Sorted Archives**: Browse by model, category, date
+- 🎯 **SEO Tags + Sitemap + RSS**
+- 📁 **Dynamic Routing**: `/post/mila/summer-bliss`
+
+---
+
+### 🧩 React Components
+
+- `GalleryPage.tsx` — renders parsed `index.md` into styled post
+- `GalleryGrid.tsx` — homepage or archive view
+- `Lightbox.tsx` — zoom-in viewer
+- `SearchPanel.tsx` — filter by model, tag, date
+- `Sidebar.tsx` — list of models/tags/categories
+
+---
+
+### ✅ Constraints
+
+- All posts must live inside `data/<model>/<slug>/index.md`
+- No external image folders — **images must be referenced or embedded in the Markdown file**
+- Component design must be modular and fast
+- Site should scale to 100+ galleries easily
+- Fully static exportable
+
+---
+
+### Optional (Bonus)
+
+- 🧾 `/models/mila` bio pages with gallery count
+- 📤 CLI tool to create new folder + starter `index.md`
+- 🤖 n8n or Telegram bot to auto-deploy from scraped content
