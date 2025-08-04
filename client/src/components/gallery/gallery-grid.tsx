@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { Grid, List } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { GalleryCard } from "./gallery-card";
 import { Lightbox } from "./lightbox";
 import type { GalleryPost } from "@shared/schema";
 
@@ -12,7 +9,6 @@ interface GalleryGridProps {
 }
 
 export function GalleryGrid({ posts, title = "Featured Galleries", description = "Curated collections from our talented models" }: GalleryGridProps) {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<GalleryPost | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -53,75 +49,68 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
     <>
       {/* Hero Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
-            <p className="text-gray-600 dark:text-gray-400">{description}</p>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Button
-              variant={viewMode === "grid" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setViewMode("grid")}
-              className="flex items-center gap-2"
-            >
-              <Grid size={16} />
-              Grid
-            </Button>
-            <Button
-              variant={viewMode === "list" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setViewMode("list")}
-              className="flex items-center gap-2"
-            >
-              <List size={16} />
-              List
-            </Button>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
+          <p className="text-gray-600 dark:text-gray-400">{description}</p>
         </div>
       </div>
 
-      {/* Gallery Grid */}
-      {viewMode === "grid" ? (
-        <div className="masonry-grid">
-          {posts.map((post) => (
-            <GalleryCard
-              key={post.slug}
-              post={post}
-              onClick={() => openLightbox(post)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <div key={post.slug} className="flex gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+      {/* Full-width vertical gallery layout */}
+      <div className="space-y-12">
+        {posts.map((post) => (
+          <article key={post.slug} className="w-full">
+            {/* Post Header */}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                {post.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4 text-lg leading-relaxed">
+                {post.description}
+              </p>
+              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                <span className="font-medium">{post.model === "mila-azul" ? "Mila Azul" : post.model}</span>
+                <span>•</span>
+                <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-xs">
+                  {post.category}
+                </span>
+                <span>•</span>
+                <span>{new Date(post.date).toLocaleDateString()}</span>
+                <span>•</span>
+                <span>{post.images.length} photos</span>
+              </div>
+            </div>
+            
+            {/* Full Image Display */}
+            <div className="w-full mb-6">
               <img
                 src={post.cover}
                 alt={post.title}
-                className="w-24 h-24 object-cover rounded-lg"
+                className="w-full h-auto object-cover rounded-lg cursor-pointer hover:opacity-95 transition-opacity shadow-lg"
+                onClick={() => window.location.href = `/gallery/${post.slug}`}
               />
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">{post.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{post.description}</p>
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <span className="capitalize">{post.model}</span>
-                  <span>•</span>
-                  <span>{post.category}</span>
-                  <span>•</span>
-                  <span>{post.images.length} photos</span>
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
-      )}
-
-      {/* Load More Button */}
-      <div className="flex justify-center mt-12">
-        <Button className="px-8 py-3" size="lg">
-          Load More Galleries
-        </Button>
+            
+            {/* Post Footer */}
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-6">
+              <div className="flex flex-wrap gap-2">
+                {post.tags.slice(0, 4).map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+              <button
+                onClick={() => window.location.href = `/gallery/${post.slug}`}
+                className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                View Full Gallery →
+              </button>
+            </div>
+          </article>
+        ))}
       </div>
 
       {/* Lightbox */}
