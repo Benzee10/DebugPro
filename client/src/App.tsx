@@ -14,7 +14,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/gallery/:model/:slug" component={GalleryPage} />
+      <Route path="/gallery/*" component={GalleryPage} />
       <Route path="/model/:slug" component={ModelPage} />
       <Route component={NotFound} />
     </Switch>

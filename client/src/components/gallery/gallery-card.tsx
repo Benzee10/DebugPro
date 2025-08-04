@@ -43,8 +43,12 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
     return colors[category as keyof typeof colors] || "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300";
   };
 
+  const handleCardClick = () => {
+    window.location.href = `/gallery/${post.slug}`;
+  };
+
   return (
-    <article className="masonry-item group cursor-pointer" onClick={onClick}>
+    <article className="masonry-item group cursor-pointer" onClick={handleCardClick}>
       <Card className="bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
         {/* Cover Image */}
         <div className="relative overflow-hidden">
@@ -120,7 +124,7 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
                 </Badge>
               )}
             </div>
-            <Link href={`/gallery/${post.slug.replace('/', '/')}`}>
+            <Link href={`/gallery/${post.slug}`}>
               <ArrowRight className="text-primary hover:text-primary/80 transition-colors" size={16} />
             </Link>
           </div>
