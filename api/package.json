@@ -1,0 +1,9 @@
+{
+  "name": "shiny-dollop-api",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "index.js",
+  "dependencies": {
+    "@vercel/node": "^5.3.11"
+  }
+}

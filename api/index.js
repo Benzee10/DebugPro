@@ -1,20 +1,3 @@
-// TypeScript types for Vercel functions
-interface VercelRequest {
-  url?: string;
-  method?: string;
-  headers: { [key: string]: string | string[] | undefined };
-  body?: any;
-  query?: { [key: string]: string | string[] };
-}
-
-interface VercelResponse {
-  status(statusCode: number): VercelResponse;
-  json(object: any): VercelResponse;
-  send(body: string): VercelResponse;
-  setHeader(name: string, value: string): VercelResponse;
-  end(): VercelResponse;
-}
-
 // Gallery data - inline to avoid import issues with Vercel deployment
 const sampleGalleryPosts = [
   {
@@ -28,7 +11,7 @@ const sampleGalleryPosts = [
     cover: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg"
   },
   {
-    slug: "mila-azul/candy-kiss",
+    slug: "mila-azul/candy-kiss",  
     title: "Mila Azul in Metart set Candy Kiss",
     description: "Mila Azul turns up the sweetness and seduction in Metart's gorgeous new gallery — Candy Kiss.",
     date: "2025-07-27T23:51:00",
@@ -46,8 +29,8 @@ const galleryData = {
   tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery"]
 };
 
-// Simple SEO generation functions (inline to avoid import issues)
-function generateSimpleSitemap(baseUrl: string): string {
+// Simple SEO generation functions
+function generateSimpleSitemap(baseUrl) {
   const posts = galleryData?.posts || [];
   const entries = [
     `  <url>
@@ -73,7 +56,7 @@ ${entries.join('\n')}
 </urlset>`;
 }
 
-function generateSimpleRSS(baseUrl: string): string {
+function generateSimpleRSS(baseUrl) {
   const posts = galleryData?.posts || [];
   const sortedPosts = [...posts]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -101,7 +84,7 @@ ${items}
 }
 
 // Main handler function
-function handler(req: VercelRequest, res: VercelResponse) {
+function handler(req, res) {
   const { url } = req;
 
   // Add CORS headers

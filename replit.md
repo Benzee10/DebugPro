@@ -23,6 +23,12 @@ Shiny Dollop is a modern React-based static gallery blog application featuring M
   - GitHub-ready repository structure with .gitignore
   - Production build optimization and static site generation
   - Comprehensive deployment documentation and instructions
+- **Vercel Deployment Issues Fixed (August 2025)**:
+  - Resolved module system conflicts by creating separate api/package.json with CommonJS
+  - Converted api/index.ts to api/index.js to avoid TypeScript compilation issues
+  - Inlined gallery data to prevent import path issues during serverless execution
+  - Fixed routing configuration in vercel.json for proper function handling
+  - Created DEPLOYMENT-GUIDE.md with comprehensive troubleshooting steps
 
 # User Preferences
 

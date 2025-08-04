@@ -1,0 +1,13 @@
+server/
+node_modules/
+.git/
+*.md
+!DEPLOYMENT-GUIDE.md
+!README.md
+tsconfig.json
+tsconfig.server.json
+vite.config.ts
+vite.config.production.ts
+drizzle.config.ts
+attached_assets/
+data/
