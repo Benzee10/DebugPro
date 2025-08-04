@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User, Tag, Images, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { getGalleryPost } from "@/lib/gallery-data";
+import { updatePageMeta } from "@/lib/seo";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function GalleryPage() {
   const params = useParams();
@@ -17,6 +18,16 @@ export default function GalleryPage() {
   
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  // Update SEO meta tags
+  useEffect(() => {
+    if (post) {
+      updatePageMeta(post);
+    }
+    return () => {
+      updatePageMeta(); // Reset to default when component unmounts
+    };
+  }, [post]);
 
   if (!post) {
     return (

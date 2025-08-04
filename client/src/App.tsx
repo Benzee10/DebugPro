@@ -4,10 +4,12 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 
 import Home from "@/pages/home";
 import GalleryPage from "@/pages/gallery";
 import ModelPage from "@/pages/model";
+import ArchivePage from "@/pages/archive";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/gallery/*" component={GalleryPage} />
       <Route path="/model/:slug" component={ModelPage} />
+      <Route path="/archive" component={ArchivePage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -28,6 +31,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <StickyVideoWidget />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
