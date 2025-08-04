@@ -1,0 +1,155 @@
+### 📌 Full Prompt: "Shiny Dollop" — Gallery-Based Static Blog (React Version)
+
+You are a world-class frontend engineer and UX expert. Your task is to build a visually rich, gallery-based static blog called **"Shiny Dollop"** using **React**. The site will showcase curated photo albums using Markdown as the content format. The final application must be performant, themeable, SEO-friendly, and optimized for monetization through visual placements.
+
+---
+
+### 1. 🧱 Core Technology Stack
+
+- **Framework**: React + Vite (static SPA/MPA build)
+- **Styling**: Tailwind CSS with `@tailwindcss/typography` and `postcss-nesting`
+- **Markdown Parser**: `gray-matter` + `remark` + `rehype` + custom plugins
+- **Routing**: React Router (with dynamic routing for blog posts)
+- **State Management**: Local state + `localStorage`
+- **Build Tools**: Vite + custom postbuild scripts
+
+---
+
+### 2. ✨ Key Features
+
+#### 🖼️ Gallery-Focused Enhancements
+- **Lightbox Viewer**: Fullscreen image preview with keyboard navigation
+- **Lazy Loading**: Progressive loading of images with blurred placeholders
+- **Slideshow Mode**: Fullscreen slideshow autoplay with navigation
+- **Optional Watermark Overlay**: Per post/image
+
+#### 🎨 Dynamic Theming
+- Light / Dark / System theme switch
+- Hue slider to change the site’s primary accent color using CSS `--hue`
+- Persistent theme settings via `localStorage`
+
+#### 💰 Monetization & Ad Features
+- Custom `rehype-ad-injector.js` plugin:
+  - Inject ad container at midpoint of blog post content
+  - Include top and bottom banner ads
+- **Sticky Video Ad Widget**:
+  - Fixed position in corner
+  - Autoplay video with “See More” button linking to SmartLink
+
+#### 🔍 Instant Search
+- Use **Pagefind** or Fuse.js for client-side search
+  - Search index generated on build
+  - Live search panel with real-time dropdown results (image + title)
+
+#### 🚀 Smooth Transitions
+- Integrate `Framer Motion` for route transitions (fade + slide-up)
+
+#### 📢 SEO & Syndication
+- Generate `sitemap.xml` and `rss.xml` during build
+- Meta tags, OpenGraph, and structured data components
+
+#### 🗂️ Content Structure
+- **Homepage**:
+  - Paginated gallery grid
+  - Insert ad block after second row
+- **Archive Page**:
+  - Interactive tag/category/year filters
+  - Optional timeline or masonry layout
+- **Post Page**:
+  - Markdown-powered
+  - Includes metadata (title, date, tags)
+  - Fully themed with styled prose
+
+---
+
+### 3. 🏗️ Project Structure
+
+```
+src/
+  components/         # UI components (Gallery, Lightbox, Search, etc.)
+  content/
+    posts/            # Markdown posts
+  layouts/            # Base layouts, post layout
+  pages/              # Homepage, Archive, Post viewer
+  plugins/            # remark/rehype plugins (e.g. rehype-ad-injector.js)
+  styles/             # global.css, tailwind.css, markdown.css
+  utils/              # date formatting, theme manager, markdown parser
+  config/             # site-wide config and constants
+  hooks/              # custom hooks (e.g. useTheme, useHue)
+  data/               # search index, tag/category maps
+```
+
+---
+
+### 4. 🧩 Components to Build
+
+- `Header`: Navigation, theme controls, and search toggle
+- `ThemeSwitch`: Toggle between Light/Dark/System
+- `HueSlider`: Update primary color via `--hue` var
+- `SearchPanel`: Dropdown with live results
+- `PostCard`: Gallery preview (image, title, tags)
+- `GalleryGrid`: Responsive image layout
+- `Lightbox`: Fullscreen modal with keyboard navigation
+- `StickyAdWidget`: Bottom video player with CTA
+- `Sidebar`: Tag/category filters, about info
+- `ArchivePanel`: Interactive tag/year/category filter UI
+
+---
+
+### 5. ⚙️ Configuration Files
+
+#### `tailwind.config.js`
+- Content paths: `./src/**/*.{js,jsx,ts,tsx,md}`
+- Enable `@tailwindcss/typography`
+- Custom colors with CSS variable (`--hue`) support
+
+#### `vite.config.js`
+- Markdown loader + post-processing pipeline
+- Search index generation during build
+- Sitemap + RSS generation
+
+#### `tsconfig.json`
+- Enable strict type checking
+- Path aliases: `@/`, `@components/`, `@utils/`
+
+---
+
+### 6. 📚 Sample Markdown Posts
+
+Include at least 3–5 posts in `/content/posts/`:
+
+- Frontmatter:
+  ```yaml
+  title: "Sample Gallery"
+  date: "2025-08-01"
+  tags: ["Outdoor", "Portrait"]
+  description: "A collection of scenic photography"
+  cover: "/images/sample-01.jpg"
+  ```
+
+- Body:
+  - 10–30 images as a gallery
+  - Headings, lists, callouts
+  - Code blocks (for Expressive Code support)
+  - :::tip style notes
+
+---
+
+### 7. ✅ Final Requirements
+
+- Fully deployable via Vercel, Netlify, or static hosting
+- Fast, responsive layout across all screen sizes
+- Modular and maintainable component design
+- WCAG-compliant accessibility
+- Image-optimized for performance (next-gen formats, responsive sizes)
+- Minimalist and modern visual aesthetic
+
+---
+
+### 🧠 Optional Bonus Features
+
+- 🔒 Optional content confirmation modal (18+ style, configurable)
+- 🌍 i18n with JSON-based translation loader
+- 📤 Admin gallery generator (CLI or GUI)
+- 📈 Client-side post view tracker
+- 🤖 Telegram bot for auto-publishing new posts
