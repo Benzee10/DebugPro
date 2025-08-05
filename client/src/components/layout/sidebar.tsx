@@ -5,15 +5,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { galleryData } from "@/lib/gallery-data";
-import type { GalleryPost } from "@shared/schema";
+import type { GalleryPost, Model, GalleryData } from "@shared/schema";
 
 interface SidebarProps {
   posts: GalleryPost[];
+  galleryData: GalleryData;
   onFiltersChange?: (posts: GalleryPost[]) => void;
 }
 
-export function Sidebar({ posts, onFiltersChange }: SidebarProps) {
+export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {
   const { accentHue, setAccentHue } = useTheme();
   const { filters, updateFilter, filteredPosts } = useSearch(posts);
 

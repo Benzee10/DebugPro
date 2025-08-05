@@ -75,10 +75,13 @@ export default function ArchivePage() {
       <Header />
       
       <div className="flex">
-        <Sidebar
-          posts={galleryData?.posts || []}
-          onFiltersChange={() => {}}
-        />
+        {galleryData && (
+          <Sidebar
+            posts={galleryData.posts}
+            galleryData={galleryData}
+            onFiltersChange={() => {}}
+          />
+        )}
         
         <main className="flex-1 p-6 lg:p-8">
           {/* Archive Header */}

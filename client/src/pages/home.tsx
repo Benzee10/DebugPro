@@ -42,10 +42,13 @@ export default function Home() {
       <Header />
       
       <div className="flex">
-        <Sidebar
-          posts={galleryData?.posts || []}
-          onFiltersChange={handleFiltersChange}
-        />
+        {galleryData && (
+          <Sidebar
+            posts={galleryData.posts}
+            galleryData={galleryData}
+            onFiltersChange={handleFiltersChange}
+          />
+        )}
         
         <main className="flex-1 p-6 lg:p-8">
           {/* Top Ad */}
