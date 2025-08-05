@@ -19,21 +19,15 @@
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(var(--accent-hue), 50%, 60%);
+  --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
   
-  /* Enhanced accent hue system */
+  /* Custom properties for accent hue */
   --accent-hue: 320;
   --primary-hsl: var(--accent-hue), 85%, 65%;
   --primary-dark-hsl: var(--accent-hue), 75%, 55%;
   --primary: hsl(var(--primary-hsl));
   --primary-foreground: hsl(0, 0%, 100%);
-  
-  /* Accent-based secondary colors */
-  --accent: hsl(calc(var(--accent-hue) + 20), 40%, 95%);
-  --accent-foreground: hsl(var(--accent-hue), 60%, 20%);
-  --border: hsl(calc(var(--accent-hue) + 10), 20%, 88%);
-  --input: hsl(calc(var(--accent-hue) + 10), 20%, 88%);
 }
 
 .dark {
@@ -45,19 +39,17 @@
   --popover-foreground: hsl(0, 0%, 98%);
   --card: hsl(240, 10%, 3.9%);
   --card-foreground: hsl(0, 0%, 98%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(var(--accent-hue), 40%, 70%);
-  
-  /* Enhanced dark mode with accent hue */
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
   --primary: hsl(var(--primary-dark-hsl));
   --primary-foreground: hsl(0, 0%, 100%);
-  --accent: hsl(calc(var(--accent-hue) + 15), 25%, 18%);
-  --accent-foreground: hsl(var(--accent-hue), 70%, 80%);
-  --border: hsl(calc(var(--accent-hue) + 5), 20%, 18%);
-  --input: hsl(calc(var(--accent-hue) + 5), 20%, 18%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
 }
 
 @layer base {
