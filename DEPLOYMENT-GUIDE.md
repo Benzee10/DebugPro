@@ -26,6 +26,10 @@
 - **Issue**: Vercel error "Two or more files have conflicting paths or names" with api/index.js and api/index.ts
 - **Solution**: Removed api/index.ts since we're using the JavaScript version for deployment
 
+### 7. Vite Build Entry Module Error
+- **Issue**: Vite build error "Could not resolve entry module 'index.html'" during Vercel build
+- **Solution**: Updated vercel.json to use production Vite config with proper root and output directory settings
+
 ## Current Structure
 
 ```
@@ -51,14 +55,21 @@ The API function handles:
 - `/api/health` - Health check endpoint
 - `/api/galleries` - Gallery data endpoint
 
+## Final Working Configuration
+
+- **Build Command**: `vite build --config vite.config.production.ts`
+- **Output Directory**: `dist/public`
+- **API Function**: `api/index.js` (auto-detected by Vercel)
+- **Root**: `./client` (set in production Vite config)
+
 ## Deployment Steps
 
 1. Commit all changes to your repository
 2. Connect repository to Vercel
 3. Deploy - Vercel will:
-   - Run `vite build` to build the client
+   - Run `vite build --config vite.config.production.ts` to build the client
    - Deploy `api/index.js` as a serverless function
-   - Serve static files from `client/dist`
+   - Serve static files from `dist/public`
 
 ## Testing
 
