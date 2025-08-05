@@ -56,57 +56,59 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
         </div>
       </div>
 
-      {/* Full-width vertical gallery layout */}
-      <div className="space-y-12">
+      {/* Grid layout for galleries */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <article key={post.slug} className="w-full">
-            {/* Post Header */}
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                {post.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 text-lg leading-relaxed">
-                {post.description}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-medium">{post.model === "mila-azul" ? "Mila Azul" : post.model}</span>
-                <span>•</span>
-                <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-xs">
-                  {post.category}
-                </span>
-                <span>•</span>
-                <span>{new Date(post.date).toLocaleDateString()}</span>
-                <span>•</span>
-                <span>{post.images.length} photos</span>
+          <article key={post.slug} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {/* Post Cover Image */}
+            <div className="aspect-[4/3] relative overflow-hidden">
+              <img
+                src={post.cover}
+                alt={post.title}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                onClick={() => openLightbox(post, 0)}
+                data-testid={`gallery-cover-${post.slug}`}
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-colors">
+                <div className="absolute bottom-4 left-4 text-white opacity-0 hover:opacity-100 transition-opacity">
+                  <span className="text-sm font-medium">{Array.isArray(post.images) ? post.images.length : 0} photos</span>
+                </div>
               </div>
             </div>
             
-            {/* Full Image Display */}
-            <div className="w-full mb-6">
-              <Link href={`/gallery/${post.slug}`}>
-                <img
-                  src={post.cover}
-                  alt={post.title}
-                  className="w-full h-auto object-cover rounded-lg cursor-pointer hover:opacity-95 transition-opacity shadow-lg"
-                />
-              </Link>
-            </div>
-            
-            {/* Post Footer */}
-            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-6">
-              <div className="flex flex-wrap gap-2">
-                {post.tags.slice(0, 4).map((tag, index) => (
+            {/* Post Content */}
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                <Link href={`/gallery/${post.slug}`} className="hover:text-primary transition-colors">
+                  {post.title}
+                </Link>
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+                {post.description}
+              </p>
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-3">
+                <span className="font-medium">{post.model === "mila-azul" ? "Mila Azul" : post.model}</span>
+                <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+                  {post.category}
+                </span>
+              </div>
+              
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1 mb-3">
+                {post.tags.slice(0, 3).map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full"
                   >
                     #{tag}
                   </span>
                 ))}
               </div>
+              
+              {/* View Gallery Button */}
               <Link href={`/gallery/${post.slug}`}>
-                <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                  View Full Gallery →
+                <button className="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm">
+                  View Gallery →
                 </button>
               </Link>
             </div>
