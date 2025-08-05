@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Lightbox } from "./lightbox";
 import type { GalleryPost } from "@shared/schema";
 
@@ -82,12 +83,13 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
             
             {/* Full Image Display */}
             <div className="w-full mb-6">
-              <img
-                src={post.cover}
-                alt={post.title}
-                className="w-full h-auto object-cover rounded-lg cursor-pointer hover:opacity-95 transition-opacity shadow-lg"
-                onClick={() => window.location.href = `/gallery/${post.slug}`}
-              />
+              <Link href={`/gallery/${post.slug}`}>
+                <img
+                  src={post.cover}
+                  alt={post.title}
+                  className="w-full h-auto object-cover rounded-lg cursor-pointer hover:opacity-95 transition-opacity shadow-lg"
+                />
+              </Link>
             </div>
             
             {/* Post Footer */}
@@ -102,12 +104,11 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
                   </span>
                 ))}
               </div>
-              <button
-                onClick={() => window.location.href = `/gallery/${post.slug}`}
-                className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
-              >
-                View Full Gallery →
-              </button>
+              <Link href={`/gallery/${post.slug}`}>
+                <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                  View Full Gallery →
+                </button>
+              </Link>
             </div>
           </article>
         ))}
