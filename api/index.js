@@ -1,37 +1,34 @@
-// Gallery data - inline to avoid import issues with Vercel deployment
-const sampleGalleryPosts = [
-  {
-    slug: "mila-azul/lace-morning",
-    title: "Mila Azul in Metart X set Lace Morning 1",
-    description: "Mila Azul awakens your senses with soft lace and slow-burning seduction in this intimate morning shoot.",
-    date: "2025-07-26T10:00:00",
-    tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery"],
-    model: "mila-azul",
-    category: "Metart X",
-    cover: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg"
-  },
-  {
-    slug: "mila-azul/candy-kiss",  
-    title: "Mila Azul in Metart set Candy Kiss",
-    description: "Mila Azul turns up the sweetness and seduction in Metart's gorgeous new gallery — Candy Kiss.",
-    date: "2025-07-27T23:51:00",
-    tags: ["Mila Azul", "Candy Kiss", "Metart", "Gallery", "Erotic Beauty"],
-    model: "mila-azul",
-    category: "Metart",
-    cover: "https://cdn.elitebabes.com/content/250766/0034-01_1200.jpg"
-  }
-];
+// Gallery data - complete dataset exported from the full application
+const fs = require('fs');
+const path = require('path');
 
-const galleryData = {
-  posts: sampleGalleryPosts,
-  models: [],
-  categories: ["Metart X", "Metart", "Ultra Films", "Wow Girls"],
-  tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery"]
-};
+let galleryData = null;
+
+function loadGalleryData() {
+  if (!galleryData) {
+    try {
+      const dataPath = path.join(__dirname, 'gallery-data.json');
+      const rawData = fs.readFileSync(dataPath, 'utf8');
+      galleryData = JSON.parse(rawData);
+      console.log(`Loaded ${galleryData.posts.length} posts from gallery-data.json`);
+    } catch (error) {
+      console.error('Failed to load gallery data:', error);
+      // Fallback to minimal dataset
+      galleryData = {
+        posts: [],
+        models: [],
+        categories: [],
+        tags: []
+      };
+    }
+  }
+  return galleryData;
+}
 
 // Simple SEO generation functions
 function generateSimpleSitemap(baseUrl) {
-  const posts = galleryData?.posts || [];
+  const data = loadGalleryData();
+  const posts = data?.posts || [];
   const entries = [
     `  <url>
     <loc>${baseUrl}</loc>
@@ -57,7 +54,8 @@ ${entries.join('\n')}
 }
 
 function generateSimpleRSS(baseUrl) {
-  const posts = galleryData?.posts || [];
+  const data = loadGalleryData();
+  const posts = data?.posts || [];
   const sortedPosts = [...posts]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 20);
@@ -122,7 +120,8 @@ function handler(req, res) {
     } else if (url === '/api/health') {
       res.status(200).json({ message: 'Server is running', timestamp: new Date().toISOString() });
     } else if (url === '/api/galleries') {
-      res.status(200).json(galleryData?.posts || []);
+      const data = loadGalleryData();
+      res.status(200).json(data);
     } else {
       res.status(404).json({ error: 'Not found' });
     }

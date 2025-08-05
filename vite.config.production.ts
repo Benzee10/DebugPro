@@ -10,7 +10,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     rollupOptions: {
-      input: path.resolve(__dirname, './client/index.html'),
+      input: path.resolve(__dirname, './client/index.production.html'),
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
