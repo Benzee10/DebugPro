@@ -270,8 +270,8 @@ export class MemoryStorage implements IStorage {
       userId,
       galleryId,
       viewedAt: new Date(),
-      ipAddress,
-      userAgent
+      ipAddress: ipAddress || null,
+      userAgent: userAgent || null
     };
   }
 

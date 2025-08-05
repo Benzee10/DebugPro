@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Tag, Filter } from "lucide-react";
 import { fetchGalleryData } from "@/lib/api-client";
-import type { GalleryPost, GalleryData } from "@shared/schema";
 
 export default function ArchivePage() {
-  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
+  const [galleryData, setGalleryData] = useState<any>(null);
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTag, setSelectedTag] = useState<string>("all");
@@ -17,21 +16,7 @@ export default function ArchivePage() {
   // Load gallery data
   useEffect(() => {
     fetchGalleryData().then(data => {
-      // Convert Gallery[] to GalleryPost[] format for archive compatibility
-      const convertedData = {
-        ...data,
-        posts: (data.posts || []).map(post => ({
-          ...post,
-          id: post.id || post.slug,
-          publishedAt: new Date(post.date),
-          viewCount: 0,
-          averageRating: "0",
-          ratingCount: 0,
-          createdAt: new Date(post.date),
-          updatedAt: new Date(post.date)
-        }))
-      };
-      setGalleryData(convertedData);
+      setGalleryData(data);
     });
   }, []);
 
@@ -39,7 +24,7 @@ export default function ArchivePage() {
   const postsByYear = useMemo(() => {
     if (!galleryData) return {};
     
-    const grouped: { [year: string]: GalleryPost[] } = {};
+    const grouped: { [year: string]: any[] } = {};
     
     (galleryData.posts || []).forEach(post => {
       const year = new Date(post.date).getFullYear().toString();
@@ -238,23 +223,7 @@ export default function ArchivePage() {
 
           {/* Gallery Grid */}
           <GalleryGrid 
-            posts={filteredPosts.map(post => ({
-              id: post.id || post.slug,
-              title: post.title,
-              description: post.description,
-              slug: post.slug,
-              model: post.model,
-              category: post.category,
-              cover: post.cover,
-              images: post.images,
-              tags: post.tags || [],
-              publishedAt: new Date(post.date),
-              viewCount: 0,
-              averageRating: "0",
-              ratingCount: 0,
-              createdAt: new Date(post.date),
-              updatedAt: new Date(post.date)
-            }))}
+            posts={filteredPosts}
             title=""
             description=""
           />

@@ -84,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           cover: g.cover,
           images: g.images,
           tags: g.tags,
-          date: g.publishedAt.toISOString()
+          date: g.publishedAt?.toISOString() || new Date().toISOString()
         })),
         models,
         categories,

@@ -2,9 +2,9 @@ import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePagefind } from "@/hooks/use-pagefind";
-import { galleryData } from "@/lib/gallery-data";
+import { fetchGalleryData } from "@/lib/api-client";
 import { useState, useEffect } from "react";
-import type { GalleryPost } from "@shared/schema";
+import type { GalleryPost, GalleryData } from "@shared/schema";
 
 interface SearchPanelProps {
   onClose?: () => void;
@@ -14,7 +14,17 @@ interface SearchPanelProps {
 export function SearchPanel({ onClose, onResults }: SearchPanelProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const { searchResults, isSearching, search } = usePagefind(galleryData.posts);
+  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
+  const { searchResults, isSearching, search } = usePagefind(galleryData?.posts || []);
+
+  // Load gallery data from API
+  useEffect(() => {
+    fetchGalleryData().then(data => {
+      setGalleryData(data);
+    }).catch(error => {
+      console.error('Failed to load gallery data for search:', error);
+    });
+  }, []);
 
   // Real-time search effect with debouncing
   useEffect(() => {
@@ -24,7 +34,7 @@ export function SearchPanel({ onClose, onResults }: SearchPanelProps) {
         setShowResults(true);
       } else {
         setShowResults(false);
-        onResults?.(galleryData.posts); // Show all posts when no search
+        onResults?.(galleryData?.posts || []); // Show all posts when no search
       }
     }, 200);
 
@@ -45,7 +55,7 @@ export function SearchPanel({ onClose, onResults }: SearchPanelProps) {
   const clearSearch = () => {
     setSearchQuery("");
     setShowResults(false);
-    onResults?.(galleryData.posts);
+    onResults?.(galleryData?.posts || []);
   };
 
   return (

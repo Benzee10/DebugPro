@@ -10,7 +10,9 @@ export function useSearch(posts: GalleryPost[]) {
     tags: [],
     dateRange: "all",
     sortBy: "date",
-    sortOrder: "desc"
+    sortOrder: "desc",
+    page: 1,
+    limit: 20
   });
 
   const fuse = useMemo(() => {
