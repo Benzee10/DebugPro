@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
 import { AdBanner } from "@/components/ads/ad-banner";
+import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import { updatePageMeta } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
 import type { Gallery } from "@shared/schema";
@@ -121,6 +122,9 @@ export default function Home() {
           <AdBanner position="bottom" className="mt-12" />
         </main>
       </div>
+      
+      {/* Sticky Video Widget */}
+      <StickyVideoWidget />
     </div>
   );
 }
