@@ -121,7 +121,101 @@ function handler(req, res) {
       res.status(200).json({ message: 'Server is running', timestamp: new Date().toISOString() });
     } else if (url === '/api/galleries') {
       const data = loadGalleryData();
-      res.status(200).json(data);
+      const posts = data?.posts || [];
+      
+      // Parse query parameters for pagination
+      const urlParts = new URL(url, `http://${req.headers.host}`);
+      const page = parseInt(urlParts.searchParams.get('page') || '1');
+      const limit = parseInt(urlParts.searchParams.get('limit') || '20');
+      
+      const total = posts.length;
+      const offset = (page - 1) * limit;
+      const galleries = posts.slice(offset, offset + limit).map(post => ({
+        id: post.slug,
+        title: post.title,
+        description: post.description,
+        slug: post.slug,
+        model: post.model,
+        category: post.category,
+        cover: post.cover,
+        images: post.images,
+        tags: post.tags,
+        publishedAt: new Date(post.date),
+        viewCount: 0,
+        averageRating: "0",
+        ratingCount: 0,
+        createdAt: new Date(post.date),
+        updatedAt: new Date(post.date)
+      }));
+      
+      res.status(200).json({
+        galleries,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit)
+      });
+    } else if (url === '/api/galleries/trending') {
+      const data = loadGalleryData();
+      const posts = data?.posts || [];
+      
+      // Parse query parameters
+      const urlParts = new URL(url, `http://${req.headers.host}`);
+      const limit = parseInt(urlParts.searchParams.get('limit') || '10');
+      
+      // Return most recent posts as "trending"
+      const galleries = posts.slice(0, limit).map(post => ({
+        id: post.slug,
+        title: post.title,
+        description: post.description,
+        slug: post.slug,
+        model: post.model,
+        category: post.category,
+        cover: post.cover,
+        images: post.images,
+        tags: post.tags,
+        publishedAt: new Date(post.date),
+        viewCount: Math.floor(Math.random() * 1000), // Random view count for trending
+        averageRating: "0",
+        ratingCount: 0,
+        createdAt: new Date(post.date),
+        updatedAt: new Date(post.date)
+      }));
+      
+      res.status(200).json({ galleries });
+    } else if (url.startsWith('/api/galleries/') && url.includes('/')) {
+      // Handle individual gallery requests like /api/galleries/mila-azul/sunset-dreams
+      const pathParts = url.split('/');
+      const slug = pathParts.slice(3).join('/'); // Get everything after /api/galleries/
+      
+      const data = loadGalleryData();
+      const posts = data?.posts || [];
+      const post = posts.find(p => p.slug === slug);
+      
+      if (!post) {
+        res.status(404).json({ error: 'Gallery not found' });
+        return;
+      }
+      
+      const gallery = {
+        id: post.slug,
+        title: post.title,
+        description: post.description,
+        slug: post.slug,
+        model: post.model,
+        category: post.category,
+        cover: post.cover,
+        images: post.images,
+        tags: post.tags,
+        publishedAt: new Date(post.date),
+        viewCount: Math.floor(Math.random() * 500),
+        averageRating: "0",
+        ratingCount: 0,
+        createdAt: new Date(post.date),
+        updatedAt: new Date(post.date)
+      };
+      
+      res.status(200).json(gallery);
     } else {
       res.status(404).json({ error: 'Not found' });
     }

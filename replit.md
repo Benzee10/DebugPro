@@ -7,12 +7,15 @@ A modern photo gallery application featuring galleries of models, with comprehen
 - **2025-08-05**: Successfully migrated from Replit Agent to Replit environment
 - **2025-08-05**: Removed PostgreSQL database per user request - now using JSON/markdown data source
 - **2025-08-05**: Implemented photo redirect functionality to https://redirect01.vercel.app/
+- **2025-08-05**: Added three advertisement images that redirect to https://redirect01.vercel.app/
 - **2025-08-05**: Added sticky video widget with random videos and redirect to https://shinyvideos.vercel.app/
 - **2025-08-05**: Removed authentication system per user request (no login needed)
 - **2025-08-05**: Converted to memory-based storage for better Vercel compatibility
+- **2025-08-05**: Fixed Vercel API endpoints to match frontend expectations
 
 ## User Preferences
 - Redirect all photo clicks to: https://redirect01.vercel.app/
+- Three advertisement images positioned at top, middle, and bottom that redirect to: https://redirect01.vercel.app/
 - Sticky video widget with random videos from project1content.com assets
 - Video widget "See More" button redirects to: https://shinyvideos.vercel.app/
 - No authentication system needed - nobody logs into the blog
