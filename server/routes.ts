@@ -35,15 +35,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/models", async (req, res) => {
     try {
-      const models = [
-        {
-          name: "Mila",
-          slug: "mila",
-          galleryCount: 8,
-          totalLikes: 156
-        }
-      ];
-      res.json(models);
+      const galleryData = await loadGalleryData();
+      res.json(galleryData.models);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch models" });
     }

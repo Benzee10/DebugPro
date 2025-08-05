@@ -119,16 +119,31 @@ export async function loadGalleryData() {
   const categories = Array.from(categoriesSet);
   const tags = Array.from(tagsSet);
   
-  // Create model data (for now, just Mila Azul)
-  const models = [{
-    name: "Mila Azul",
-    slug: "mila-azul",
-    avatar: posts.find(p => p.model === "mila-azul")?.cover || "",
-    bio: "Stunning Ukrainian model featured in exclusive Metart, Ultra Films, and Wow Girls productions.",
-    galleryCount: posts.filter(p => p.model === "mila-azul").length,
-    totalLikes: 892,
-    joinDate: "2024-01-15"
-  }];
+  // Create model data automatically from all detected models
+  const modelSlugs = Array.from(new Set(posts.map(p => p.model)));
+  
+  const models = modelSlugs.map(modelSlug => {
+    const modelPosts = posts.filter(p => p.model === modelSlug);
+    const modelName = modelSlug.split('-').map((word: string) => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+    
+    // Generate a bio based on categories
+    const categoriesArray = Array.from(new Set(modelPosts.map(p => p.category))).filter(Boolean);
+    const bio = categoriesArray.length > 0 
+      ? `Featured in ${categoriesArray.join(', ')} productions with ${modelPosts.length} stunning galleries.`
+      : `Beautiful model with ${modelPosts.length} exclusive galleries.`;
+    
+    return {
+      name: modelName,
+      slug: modelSlug,
+      avatar: modelPosts[0]?.cover || "",
+      bio,
+      galleryCount: modelPosts.length,
+      totalLikes: Math.floor(Math.random() * 1000) + 100, // Random likes for now
+      joinDate: "2024-01-15"
+    };
+  }).sort((a, b) => b.galleryCount - a.galleryCount); // Sort by gallery count
 
   return {
     posts,
