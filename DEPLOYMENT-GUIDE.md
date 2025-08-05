@@ -34,6 +34,10 @@
 - **Issue**: Vercel error "Could not resolve vite.config.production.ts" - config file was being excluded
 - **Solution**: Removed vite.config files from .vercelignore and added explicit input path in rollupOptions
 
+### 9. Entry Module Path Resolution (Final Fix)
+- **Issue**: Still getting "Could not resolve entry module './index.html'" with relative paths
+- **Solution**: Removed root directory setting and used absolute path for input: `path.resolve(__dirname, './client/index.html')`
+
 ## Current Structure
 
 ```
@@ -62,9 +66,10 @@ The API function handles:
 ## Final Working Configuration
 
 - **Build Command**: `vite build --config vite.config.production.ts`
-- **Output Directory**: `dist/public`
+- **Output Directory**: `dist/public`  
 - **API Function**: `api/index.js` (auto-detected by Vercel)
-- **Root**: `./client` (set in production Vite config)
+- **Entry Point**: Absolute path `path.resolve(__dirname, './client/index.html')`
+- **No Root Override**: Build runs from project root with explicit input path
 
 ## Deployment Steps
 
