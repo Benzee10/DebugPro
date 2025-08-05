@@ -1,116 +1,80 @@
-# Overview
+# Shiny Dollop - Premium Photo Gallery
 
-Shiny Dollop is a modern React-based static gallery blog application featuring Mila Azul photo collections from premium studios. The application follows a gallery-first approach where each collection is organized by model and production studio, with content managed through markdown files. Built as a full-stack application with Express.js backend and React frontend, it provides both static site generation capabilities and dynamic API endpoints for content management.
+## Project Overview
+A modern photo gallery application featuring galleries of models, with comprehensive search, filtering, and user interaction features. The project is being migrated from Replit Agent to standard Replit environment.
 
-## Recent Changes (August 2025)
-- **Automatic Model Detection System (August 2025)**: Implemented fully automatic model discovery system that detects all models from data directory folders. System now loads 60+ models dynamically instead of hardcoded single model. Updated both frontend and backend to use real API data instead of static samples. New model folders are automatically detected and added to system without manual configuration.
-- **Project Migration & Vercel Fix (August 2025)**: Successfully migrated from Replit Agent to standard Replit environment for improved compatibility and security. Fixed Vercel deployment to use complete gallery dataset (98 posts) instead of hardcoded sample data. Resolved broken image URLs in first 3 posts that were preventing proper display.
-- **Favicon Implementation**: Added custom SVG favicon with gallery theme design featuring photo frames and colorful dots
-- Replaced sample data with 5 Mila Azul gallery posts from Metart X, Metart, Ultra Films, and Wow Girls
-- Updated model structure to focus on single model (Mila Azul) with professional studio content
-- Added support for new category types: Metart X, Metart, Ultra Films, Wow Girls
-- Updated gallery card styling to handle new model and category color schemes
-- Created new markdown file structure under data/mila-azul/ with proper slugs
-- **Advanced Features Implementation (August 2025)**:
-  - Real-time search with instant results using enhanced Pagefind-style functionality
-  - Full-width vertical gallery layout replacing masonry grid
-  - Intelligent ad placement with sticky video widget linking to Adsterra SmartLink
-  - SEO utilities for automatic sitemap.xml, sitemap-index.xml, and rss.xml generation
-  - Archive page with year/category/tag filtering and interactive controls
-  - Pagination system for homepage with mid-scroll ad injection
-  - Enhanced search panel with live dropdown results and image previews
-  - Page transition system for smooth navigation effects
-- **Production Deployment Setup (August 2025)**:
-  - Vercel deployment configuration with vercel.json
-  - Serverless API functions for SEO endpoints (/api/index.ts)
-  - GitHub-ready repository structure with .gitignore
-  - Production build optimization and static site generation
-  - Comprehensive deployment documentation and instructions
-- **Vercel Deployment Issues Fixed (August 2025)**:
-  - Resolved module system conflicts by creating separate api/package.json with CommonJS
-  - Converted api/index.ts to api/index.js to avoid TypeScript compilation issues
-  - Inlined gallery data to prevent import path issues during serverless execution
-  - Fixed routing configuration in vercel.json for proper function handling
-  - Created DEPLOYMENT-GUIDE.md with comprehensive troubleshooting steps
+## Recent Changes
+- **2025-08-05**: Starting migration from Replit Agent to Replit environment
+- **2025-08-05**: Created PostgreSQL database for user data, favorites, ratings, and analytics
+- **2025-08-05**: Setting up full-stack architecture with client/server separation
 
-# User Preferences
+## User Preferences
+- Redirect all photo clicks to: https://redirect01.vercel.app/
+- Implement favorites system for bookmarking galleries
+- Add 5-star rating system for galleries
+- Include trending section for popular content
+- Show recommended "More like this" content based on viewing history
+- Implement infinite scroll for better UX
+- Display gallery statistics (view counts, popularity metrics)
 
-Preferred communication style: Simple, everyday language.
+## Project Architecture
 
-# System Architecture
+### Tech Stack
+- **Frontend**: React 18 + TypeScript + Vite
+- **Backend**: Express.js + TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Authentication**: Replit Auth (OpenID Connect)
+- **Data Fetching**: TanStack Query (React Query)
+- **Routing**: Wouter for client-side routing
 
-## Frontend Architecture
-The client-side is built with React and Vite, implementing a component-based architecture with modern patterns:
+### Directory Structure
+```
+├── client/                 # Frontend React application
+│   ├── src/
+│   │   ├── components/    # Reusable UI components
+│   │   ├── pages/         # Page components
+│   │   ├── hooks/         # Custom React hooks
+│   │   ├── lib/           # Utilities and data
+│   │   └── index.css      # Global styles
+│   └── index.html
+├── server/                # Backend Express server
+│   ├── index.ts          # Server entry point
+│   ├── routes.ts         # API routes
+│   ├── storage.ts        # Data storage layer
+│   ├── db.ts             # Database connection
+│   └── replitAuth.ts     # Authentication setup
+├── data/                 # Markdown content files
+├── shared/               # Shared types and schemas
+└── attached_assets/      # User-uploaded assets
+```
 
-- **Component Structure**: Uses shadcn/ui components for consistent design system implementation
-- **Routing**: Implements wouter for lightweight client-side routing with dynamic routes for galleries and models
-- **State Management**: Combines local React state with TanStack Query for server state management and localStorage for theme persistence
-- **Styling**: Tailwind CSS with CSS custom properties for dynamic theming, including accent hue customization
-- **UI Framework**: Radix UI primitives provide accessible component foundations with shadcn/ui styling
+### Key Features to Implement
+1. **Favorites System**: Users can bookmark galleries they like
+2. **Rating System**: 5-star rating system for galleries
+3. **Trending Section**: Display most popular galleries
+4. **Recommendations**: "More like this" based on viewing history
+5. **Infinite Scroll**: Load more galleries dynamically
+6. **Gallery Statistics**: View counts and popularity metrics
+7. **Photo Redirects**: All photo clicks redirect to https://redirect01.vercel.app/
 
-## Backend Architecture
-Express.js server provides API endpoints and development tooling:
+### Database Schema (Planning)
+- Users table (for Replit Auth)
+- Galleries table (from existing data structure)
+- Favorites table (user_id, gallery_id)
+- Ratings table (user_id, gallery_id, rating)
+- Views table (user_id, gallery_id, viewed_at)
+- Sessions table (for auth)
 
-- **API Structure**: RESTful endpoints for gallery data, models, and content management
-- **Development Setup**: Vite integration for hot module replacement and development experience
-- **Content Management**: File-based content system reading from markdown files in data directory
-- **Storage Layer**: Abstracted storage interface supporting both memory storage (development) and database implementations
+## Current Status
+- [•] Setting up database and project structure
+- [ ] Implementing authentication system
+- [ ] Creating gallery data models
+- [ ] Building user interaction features
+- [ ] Testing and deployment
 
-## Data Architecture
-Content-first design using markdown files with frontmatter metadata:
-
-- **File Organization**: Hierarchical structure organized by model and gallery slug (data/model/gallery/index.md)
-- **Schema Validation**: Zod schemas for type safety across gallery posts, models, and search filters
-- **Image Handling**: Inline markdown images with external URL references for scalability
-- **Metadata Management**: YAML frontmatter contains gallery metadata while markdown content includes descriptions and image references
-
-## Key Features
-- **Gallery System**: Masonry-style grid layout with lightbox viewing and slideshow functionality
-- **Search & Filtering**: Client-side search using Fuse.js with multi-criteria filtering (model, category, tags, date range)
-- **Theming**: Dynamic theme switching (light/dark/system) with customizable accent hue
-- **Responsive Design**: Mobile-first responsive layout with adaptive sidebar and navigation
-- **Performance**: Lazy loading images, optimized rendering, and efficient state management
-
-## Database Integration
-While currently using memory storage for development, the application is structured to support:
-
-- **Drizzle ORM**: Configured for PostgreSQL with Neon Database integration
-- **Migration System**: Drizzle kit setup for schema management and migrations
-- **Environment Configuration**: Database URL configuration through environment variables
-
-# External Dependencies
-
-## Core Framework Dependencies
-- **React 18**: Frontend framework with modern hooks and concurrent features
-- **Vite**: Build tool and development server for fast development experience
-- **Express.js**: Backend server framework for API endpoints and static serving
-
-## Database & ORM
-- **Drizzle ORM**: Type-safe database toolkit for PostgreSQL integration
-- **Neon Database**: Serverless PostgreSQL database platform via @neondatabase/serverless
-- **PostgreSQL**: Primary database system (dialect configured in drizzle.config.ts)
-
-## UI & Styling
-- **Tailwind CSS**: Utility-first CSS framework for styling
-- **Radix UI**: Accessible component primitives for complex UI elements
-- **shadcn/ui**: Pre-built component library built on Radix UI
-- **Lucide React**: Icon library for consistent iconography
-
-## Content Management
-- **Gray Matter**: Frontmatter parser for markdown files
-- **Remark/Rehype**: Markdown processing pipeline for content transformation
-- **Unified**: Text processing framework for markdown compilation
-
-## Search & Navigation
-- **Fuse.js**: Fuzzy search library for client-side content searching
-- **Wouter**: Lightweight routing library for single-page application navigation
-- **TanStack Query**: Server state management for API data fetching and caching
-
-## Development Tools
-- **TypeScript**: Static type checking for improved developer experience
-- **ESBuild**: Fast JavaScript bundler for production builds
-- **PostCSS**: CSS processing with Tailwind CSS integration
-- **Date-fns**: Date utility library for formatting and manipulation
-
-## Third-party Integrations
-- **Replit Integration**: Development environment support with runtime error overlay and cartographer plugin for enhanced debugging experience
+## Development Notes
+- Use authentic data from existing gallery JSON files
+- Maintain separation between client and server
+- Follow security best practices for user data
+- Implement proper error handling and loading states
