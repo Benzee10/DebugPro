@@ -19,7 +19,7 @@ export function Header() {
   const navigation = [
     { name: "Gallery", href: "/", active: location === "/" },
     { name: "Archive", href: "/archive", active: location === "/archive" },
-    { name: "Models", href: "/model/mila-azul", active: location.startsWith("/model") },
+    { name: "Models", href: "/models", active: location === "/models" || location.startsWith("/model") },
     { name: "About", href: "/about", active: location === "/about" }
   ];
 

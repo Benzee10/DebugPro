@@ -9,6 +9,7 @@ import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import Home from "@/pages/home";
 import GalleryPage from "@/pages/gallery";
 import ModelPage from "@/pages/model";
+import ModelsPage from "@/pages/models";
 import ArchivePage from "@/pages/archive";
 import NotFound from "@/pages/not-found";
 
@@ -17,6 +18,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/gallery/*" component={GalleryPage} />
+      <Route path="/models" component={ModelsPage} />
       <Route path="/model/:slug" component={ModelPage} />
       <Route path="/archive" component={ArchivePage} />
       <Route component={NotFound} />
