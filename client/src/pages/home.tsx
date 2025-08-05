@@ -15,11 +15,19 @@ export default function Home() {
   const postsPerPage = 6;
 
   // Load gallery data from new database API
-  const { data: galleriesData, isLoading } = useQuery({
+  const { data: galleriesData, isLoading } = useQuery<{
+    galleries: Gallery[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }>({
     queryKey: ['/api/galleries'],
   });
 
-  const { data: trendingData } = useQuery({
+  const { data: trendingData } = useQuery<{
+    galleries: Gallery[];
+  }>({
     queryKey: ['/api/galleries/trending'],
   });
 

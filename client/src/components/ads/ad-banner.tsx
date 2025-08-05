@@ -4,37 +4,29 @@ interface AdBannerProps {
 }
 
 export function AdBanner({ position, className = "" }: AdBannerProps) {
-  const adContent = {
-    top: {
-      title: "Premium Content",
-      description: "Discover exclusive galleries and behind-the-scenes content",
-      cta: "Join Premium",
-      bgColor: "bg-gradient-to-r from-pink-500 to-rose-500"
-    },
-    middle: {
-      title: "Special Offer",
-      description: "Get access to unlimited HD galleries and videos",
-      cta: "Claim Offer",
-      bgColor: "bg-gradient-to-r from-purple-500 to-indigo-500"
-    },
-    bottom: {
-      title: "More Like This",
-      description: "Explore similar content from top photographers",
-      cta: "Browse More",
-      bgColor: "bg-gradient-to-r from-blue-500 to-cyan-500"
-    }
+  const adImages = {
+    top: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLnNCb3lbPZ-fHB1I_MsM42u2qw6ocRM5Pfg&s",
+    middle: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVESb6AsPFDWPpxAl9oPEP29E1cP2icK4NBo9Od4ruHBy2fhMpFy5r5TayMHOf5lI_O7Q&usqp=CAU",
+    bottom: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZaD3vqGrLWH-PMPS3u-lrh0GK8igAOb_F_i-_zAb9cLsa8bGWdPYl-BVmdx-j7iIBtc&usqp=CAU"
   };
 
-  const ad = adContent[position];
+  const handleClick = () => {
+    window.open('https://redirect01.vercel.app/', '_blank');
+  };
 
   return (
     <div className={`w-full my-8 ${className}`}>
-      <div className={`${ad.bgColor} rounded-lg p-6 text-white text-center shadow-lg`}>
-        <h3 className="text-xl font-bold mb-2">{ad.title}</h3>
-        <p className="text-white/90 mb-4">{ad.description}</p>
-        <button className="bg-white text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-          {ad.cta}
-        </button>
+      <div 
+        className="cursor-pointer transition-transform hover:scale-105 rounded-lg overflow-hidden shadow-lg"
+        onClick={handleClick}
+        data-testid={`ad-banner-${position}`}
+      >
+        <img
+          src={adImages[position]}
+          alt={`Advertisement ${position}`}
+          className="w-full h-auto"
+          loading="lazy"
+        />
       </div>
       <p className="text-xs text-gray-400 text-center mt-2">Advertisement</p>
     </div>
