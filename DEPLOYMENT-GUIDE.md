@@ -22,6 +22,10 @@
 - **Issue**: vercel.json outputDirectory didn't match Vite build output path
 - **Solution**: Updated outputDirectory to "dist/public" to match vite.config.ts build.outDir
 
+### 6. File Path Conflicts
+- **Issue**: Vercel error "Two or more files have conflicting paths or names" with api/index.js and api/index.ts
+- **Solution**: Removed api/index.ts since we're using the JavaScript version for deployment
+
 ## Current Structure
 
 ```
