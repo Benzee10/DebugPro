@@ -1,20 +1,30 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Tag, Filter } from "lucide-react";
-import { galleryData } from "@/lib/gallery-data";
-import type { GalleryPost } from "@shared/schema";
+import { fetchGalleryData } from "@/lib/api-client";
+import type { GalleryPost, GalleryData } from "@shared/schema";
 
 export default function ArchivePage() {
+  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTag, setSelectedTag] = useState<string>("all");
 
+  // Load gallery data
+  useEffect(() => {
+    fetchGalleryData().then(data => {
+      setGalleryData(data);
+    });
+  }, []);
+
   // Group posts by year
   const postsByYear = useMemo(() => {
+    if (!galleryData) return {};
+    
     const grouped: { [year: string]: GalleryPost[] } = {};
     
     galleryData.posts.forEach(post => {
@@ -31,10 +41,12 @@ export default function ArchivePage() {
     });
 
     return grouped;
-  }, []);
+  }, [galleryData]);
 
   // Filter posts based on selections
   const filteredPosts = useMemo(() => {
+    if (!galleryData) return [];
+    
     let posts = galleryData.posts;
 
     if (selectedYear !== "all") {
@@ -52,11 +64,11 @@ export default function ArchivePage() {
     }
 
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [selectedYear, selectedCategory, selectedTag]);
+  }, [galleryData, selectedYear, selectedCategory, selectedTag]);
 
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
-  const categories = galleryData.categories;
-  const tags = galleryData.tags;
+  const categories = galleryData?.categories || [];
+  const tags = galleryData?.tags || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,7 +76,7 @@ export default function ArchivePage() {
       
       <div className="flex">
         <Sidebar
-          posts={galleryData.posts}
+          posts={galleryData?.posts || []}
           onFiltersChange={() => {}}
         />
         
@@ -203,7 +215,7 @@ export default function ArchivePage() {
           {/* Results */}
           <div className="mb-6">
             <p className="text-gray-600 dark:text-gray-400">
-              Showing {filteredPosts.length} of {galleryData.posts.length} galleries
+              Showing {filteredPosts.length} of {galleryData?.posts.length || 0} galleries
             </p>
           </div>
 

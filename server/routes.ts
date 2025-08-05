@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { generateSitemap, generateRSSFeed, generateSitemapIndex } from "../client/src/lib/seo";
+import { loadGalleryData, loadGalleryPostsFromMarkdown } from "./markdown-loader";
 import path from "path";
 import fs from "fs";
 
@@ -9,20 +10,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API routes for gallery data
   app.get("/api/galleries", async (req, res) => {
     try {
-      // In a real implementation, this would read from markdown files
-      const galleries = [
-        {
-          slug: "mila/summer-bliss",
-          title: "Summer Bliss",
-          description: "Soft golden hour set",
-          date: "2025-08-04T10:00:00",
-          tags: ["sunset", "outdoors"],
-          model: "mila",
-          category: "Nature",
-          cover: "01.jpg"
-        }
-      ];
-      res.json(galleries);
+      const galleryData = await loadGalleryData();
+      res.json(galleryData);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch galleries" });
     }
@@ -31,9 +20,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/galleries/:model/:slug", async (req, res) => {
     try {
       const { model, slug } = req.params;
-      // In a real implementation, this would read the specific markdown file
-      // and parse it to return the full gallery data with images
-      res.json({ message: `Gallery ${model}/${slug} endpoint` });
+      const posts = await loadGalleryPostsFromMarkdown();
+      const post = posts.find(p => p.slug === `${model}/${slug}`);
+      
+      if (!post) {
+        return res.status(404).json({ error: "Gallery not found" });
+      }
+      
+      res.json(post);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch gallery" });
     }

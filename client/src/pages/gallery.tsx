@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User, Tag, Images, Heart } from "lucide-react";
 import { Link } from "wouter";
-import { getGalleryPost } from "@/lib/gallery-data";
+import { fetchGalleryPost } from "@/lib/api-client";
 import { updatePageMeta } from "@/lib/seo";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
@@ -14,10 +14,18 @@ import { useState, useEffect } from "react";
 export default function GalleryPage() {
   const params = useParams();
   const slug = params["*"] || "";
-  const post = getGalleryPost(slug);
-  
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  // Load post data
+  useEffect(() => {
+    fetchGalleryPost(slug).then(postData => {
+      setPost(postData);
+      setLoading(false);
+    });
+  }, [slug]);
 
   // Update SEO meta tags
   useEffect(() => {
@@ -28,6 +36,17 @@ export default function GalleryPage() {
       updatePageMeta(); // Reset to default when component unmounts
     };
   }, [post]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -116,7 +135,7 @@ export default function GalleryPage() {
             </Badge>
             
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
+              {post.tags.map((tag: string) => (
                 <Badge key={tag} variant="secondary" className="flex items-center gap-1">
                   <Tag size={12} />
                   {tag}
@@ -137,7 +156,7 @@ export default function GalleryPage() {
 
         {/* Image Gallery - First Half */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          {post.images.slice(0, Math.ceil(post.images.length / 2)).map((image, index) => (
+          {post.images.slice(0, Math.ceil(post.images.length / 2)).map((image: any, index: number) => (
             <div
               key={index}
               className="relative group cursor-pointer overflow-hidden rounded-lg"
@@ -167,7 +186,7 @@ export default function GalleryPage() {
 
         {/* Image Gallery - Second Half */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          {post.images.slice(Math.ceil(post.images.length / 2)).map((image, index) => (
+          {post.images.slice(Math.ceil(post.images.length / 2)).map((image: any, index: number) => (
             <div
               key={index}
               className="relative group cursor-pointer overflow-hidden rounded-lg"

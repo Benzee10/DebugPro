@@ -4,13 +4,22 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
 import { AdBanner } from "@/components/ads/ad-banner";
 import { updatePageMeta } from "@/lib/seo";
-import { galleryData } from "@/lib/gallery-data";
-import type { GalleryPost } from "@shared/schema";
+import { fetchGalleryData } from "@/lib/api-client";
+import type { GalleryPost, GalleryData } from "@shared/schema";
 
 export default function Home() {
-  const [filteredPosts, setFilteredPosts] = useState<GalleryPost[]>(galleryData.posts);
+  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
+  const [filteredPosts, setFilteredPosts] = useState<GalleryPost[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
+
+  // Load gallery data from API
+  useEffect(() => {
+    fetchGalleryData().then(data => {
+      setGalleryData(data);
+      setFilteredPosts(data.posts);
+    });
+  }, []);
 
   // Update SEO for homepage
   useEffect(() => {
@@ -34,7 +43,7 @@ export default function Home() {
       
       <div className="flex">
         <Sidebar
-          posts={galleryData.posts}
+          posts={galleryData?.posts || []}
           onFiltersChange={handleFiltersChange}
         />
         
