@@ -38,6 +38,10 @@
 - **Issue**: Still getting "Could not resolve entry module './index.html'" with relative paths
 - **Solution**: Removed root directory setting and used absolute path for input: `path.resolve(__dirname, './client/index.html')`
 
+### 10. Import Path Resolution in HTML
+- **Issue**: Vite error "Rollup failed to resolve import '/src/main.tsx'" - absolute path in HTML doesn't work with build config
+- **Solution**: Created production HTML file with relative path `./src/main.tsx` and restored root setting to `./client`
+
 ## Current Structure
 
 ```
@@ -68,8 +72,9 @@ The API function handles:
 - **Build Command**: `vite build --config vite.config.production.ts`
 - **Output Directory**: `dist/public`  
 - **API Function**: `api/index.js` (auto-detected by Vercel)
-- **Entry Point**: Absolute path `path.resolve(__dirname, './client/index.html')`
-- **No Root Override**: Build runs from project root with explicit input path
+- **Entry Point**: `client/index.production.html` with relative imports
+- **Root Setting**: `./client` for proper build context
+- **Main Entry**: `./src/main.tsx` (relative to client directory)
 
 ## Deployment Steps
 

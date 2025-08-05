@@ -1,0 +1,46 @@
+[01:22:56.810] Running build in Washington, D.C., USA (East) – iad1
+[01:22:56.810] Build machine configuration: 2 cores, 8 GB
+[01:22:56.838] Cloning github.com/Benzee10/DebugPro (Branch: main, Commit: 6126e44)
+[01:22:56.996] Previous build caches not available
+[01:22:57.090] Cloning completed: 252.000ms
+[01:22:57.122] Found .vercelignore
+[01:22:57.130] Removed 44 ignored files defined in .vercelignore
+[01:22:57.130]   /.git/config
+[01:22:57.130]   /.git/description
+[01:22:57.130]   /.git/FETCH_HEAD
+[01:22:57.130]   /.git/HEAD
+[01:22:57.130]   /.git/hooks/applypatch-msg.sample
+[01:22:57.130]   /.git/hooks/commit-msg.sample
+[01:22:57.130]   /.git/hooks/fsmonitor-watchman.sample
+[01:22:57.130]   /.git/hooks/post-update.sample
+[01:22:57.130]   /.git/hooks/pre-applypatch.sample
+[01:22:57.130]   /.git/hooks/pre-commit.sample
+[01:22:58.920] Running "vercel build"
+[01:22:59.399] Vercel CLI 44.6.4
+[01:23:00.185] Installing dependencies...
+[01:23:05.667] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[01:23:05.689] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[01:23:10.977] 
+[01:23:10.978] added 666 packages in 11s
+[01:23:10.979] 
+[01:23:10.979] 146 packages are looking for funding
+[01:23:10.980]   run `npm fund` for details
+[01:23:11.282] [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+[01:23:11.330] transforming...
+[01:23:11.340] [32m✓[39m 2 modules transformed.
+[01:23:11.346] [31mx[39m Build failed in 40ms
+[01:23:11.347] [31merror during build:
+[01:23:11.347] [31m[vite]: Rollup failed to resolve import "/src/main.tsx" from "/vercel/path0/client/index.html".
+[01:23:11.347] This is most likely unintended because it can break your application at runtime.
+[01:23:11.349] If you do want to externalize this module explicitly add it to
+[01:23:11.349] `build.rollupOptions.external`[31m
+[01:23:11.350]     at viteWarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+[01:23:11.350]     at onwarn (file:///vercel/path0/node_modules/@vitejs/plugin-react/dist/index.mjs:280:9)
+[01:23:11.350]     at onRollupWarning (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+[01:23:11.350]     at onwarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+[01:23:11.350]     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:19452:13
+[01:23:11.350]     at Object.logger [as onLog] (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+[01:23:11.350]     at ModuleLoader.handleInvalidResolvedId (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+[01:23:11.350]     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20025:26[39m
+[01:23:11.356] Error: Command "vite build --config vite.config.production.ts" exited with 1
+[01:23:14.506] Exiting build container
