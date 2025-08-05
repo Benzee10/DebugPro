@@ -3,6 +3,7 @@
 Shiny Dollop is a modern React-based static gallery blog application featuring Mila Azul photo collections from premium studios. The application follows a gallery-first approach where each collection is organized by model and production studio, with content managed through markdown files. Built as a full-stack application with Express.js backend and React frontend, it provides both static site generation capabilities and dynamic API endpoints for content management.
 
 ## Recent Changes (August 2025)
+- **Automatic Model Detection System (August 2025)**: Implemented fully automatic model discovery system that detects all models from data directory folders. System now loads 60+ models dynamically instead of hardcoded single model. Updated both frontend and backend to use real API data instead of static samples. New model folders are automatically detected and added to system without manual configuration.
 - **Project Migration & Vercel Fix (August 2025)**: Successfully migrated from Replit Agent to standard Replit environment for improved compatibility and security. Fixed Vercel deployment to use complete gallery dataset (98 posts) instead of hardcoded sample data. Resolved broken image URLs in first 3 posts that were preventing proper display.
 - **Favicon Implementation**: Added custom SVG favicon with gallery theme design featuring photo frames and colorful dots
 - Replaced sample data with 5 Mila Azul gallery posts from Metart X, Metart, Ultra Films, and Wow Girls

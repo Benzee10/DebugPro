@@ -5,14 +5,45 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar, Heart, Images } from "lucide-react";
 import { Link } from "wouter";
-import { getModel, getModelPosts } from "@/lib/gallery-data";
+import { useState, useEffect } from "react";
+import { fetchGalleryData } from "@/lib/api-client";
+import type { Model, GalleryPost } from "@/lib/gallery-data";
 import { format } from "date-fns";
 
 export default function ModelPage() {
   const params = useParams();
   const modelSlug = params.slug!;
-  const model = getModel(modelSlug);
-  const posts = getModelPosts(modelSlug);
+  const [model, setModel] = useState<Model | null>(null);
+  const [posts, setPosts] = useState<GalleryPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchGalleryData().then(data => {
+      const foundModel = data.models.find(m => m.slug === modelSlug);
+      const modelPosts = data.posts.filter(p => p.model === modelSlug);
+      
+      setModel(foundModel || null);
+      setPosts(modelPosts);
+      setLoading(false);
+    }).catch(error => {
+      console.error('Failed to fetch model data:', error);
+      setLoading(false);
+    });
+  }, [modelSlug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-300 rounded w-48 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-300 rounded w-32 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!model) {
     return (
