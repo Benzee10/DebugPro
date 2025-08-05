@@ -29,13 +29,44 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-                <Camera className="text-white text-sm" size={16} />
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="relative">
+                <svg width="40" height="40" viewBox="0 0 40 40" className="text-primary">
+                  {/* Outer circle with gradient */}
+                  <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="hsl(var(--primary-hsl))" />
+                      <stop offset="100%" stopColor="hsl(calc(var(--accent-hue) + 30), 80%, 65%)" />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" opacity="0.2" />
+                  <circle cx="20" cy="20" r="15" fill="none" stroke="url(#logoGradient)" strokeWidth="2" filter="url(#glow)" />
+                  
+                  {/* Stylized camera/lens with sensual curves */}
+                  <path d="M12 16 Q20 12 28 16 Q26 20 20 22 Q14 20 12 16 Z" fill="url(#logoGradient)" opacity="0.8" />
+                  <circle cx="20" cy="18" r="4" fill="none" stroke="url(#logoGradient)" strokeWidth="1.5" />
+                  <circle cx="20" cy="18" r="2" fill="url(#logoGradient)" />
+                  
+                  {/* Decorative elements */}
+                  <circle cx="26" cy="14" r="1.5" fill="url(#logoGradient)" opacity="0.6" />
+                  <circle cx="14" cy="14" r="1" fill="url(#logoGradient)" opacity="0.4" />
+                </svg>
               </div>
-              <h1 className="text-xl font-bold text-gradient-primary">
-                Shiny Dollop
-              </h1>
+              <div className="flex flex-col">
+                <h1 className="text-xl font-bold text-gradient-primary leading-none">
+                  Shiny Dollop
+                </h1>
+                <span className="text-xs text-primary/60 font-medium tracking-wide">
+                  Gallery Collection
+                </span>
+              </div>
             </Link>
             
             {/* Navigation - Desktop */}

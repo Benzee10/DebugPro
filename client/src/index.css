@@ -13,21 +13,27 @@
   --card-foreground: hsl(20, 14.3%, 4.1%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(248, 95%, 70%);
-  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(60, 4.8%, 95.9%);
   --secondary-foreground: hsl(24, 9.8%, 10%);
   --accent: hsl(60, 4.8%, 95.9%);
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(var(--accent-hue), 50%, 60%);
   --radius: 0.5rem;
   
-  /* Custom properties for accent hue */
-  --accent-hue: 248;
-  --primary-hsl: var(--accent-hue), 95%, 70%;
-  --primary-dark-hsl: var(--accent-hue), 85%, 60%;
+  /* Enhanced accent hue system */
+  --accent-hue: 320;
+  --primary-hsl: var(--accent-hue), 85%, 65%;
+  --primary-dark-hsl: var(--accent-hue), 75%, 55%;
+  --primary: hsl(var(--primary-hsl));
+  --primary-foreground: hsl(0, 0%, 100%);
+  
+  /* Accent-based secondary colors */
+  --accent: hsl(calc(var(--accent-hue) + 20), 40%, 95%);
+  --accent-foreground: hsl(var(--accent-hue), 60%, 20%);
+  --border: hsl(calc(var(--accent-hue) + 10), 20%, 88%);
+  --input: hsl(calc(var(--accent-hue) + 10), 20%, 88%);
 }
 
 .dark {
@@ -39,17 +45,19 @@
   --popover-foreground: hsl(0, 0%, 98%);
   --card: hsl(240, 10%, 3.9%);
   --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(var(--primary-dark-hsl));
-  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
+  --ring: hsl(var(--accent-hue), 40%, 70%);
+  
+  /* Enhanced dark mode with accent hue */
+  --primary: hsl(var(--primary-dark-hsl));
+  --primary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(calc(var(--accent-hue) + 15), 25%, 18%);
+  --accent-foreground: hsl(var(--accent-hue), 70%, 80%);
+  --border: hsl(calc(var(--accent-hue) + 5), 20%, 18%);
+  --input: hsl(calc(var(--accent-hue) + 5), 20%, 18%);
 }
 
 @layer base {
@@ -98,10 +106,31 @@
   }
 
   .text-gradient-primary {
-    background: linear-gradient(to right, hsl(var(--primary-hsl)), hsl(calc(var(--accent-hue) + 20), 85%, 65%));
+    background: linear-gradient(to right, hsl(var(--primary-hsl)), hsl(calc(var(--accent-hue) + 30), 75%, 60%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  
+  /* Hue-based button and component styles */
+  .btn-primary {
+    background: hsl(var(--primary-hsl));
+    border-color: hsl(var(--primary-hsl));
+  }
+  
+  .btn-primary:hover {
+    background: hsl(calc(var(--accent-hue)), 75%, 60%);
+    border-color: hsl(calc(var(--accent-hue)), 75%, 60%);
+  }
+  
+  /* Card hover effects with accent hue */
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    border-color: hsl(var(--primary-hsl)) !important;
+    box-shadow: 0 8px 32px hsla(var(--accent-hue), 50%, 50%, 0.15);
   }
 }
 

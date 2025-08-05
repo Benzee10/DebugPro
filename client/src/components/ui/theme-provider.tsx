@@ -18,7 +18,7 @@ type ThemeProviderState = {
 const initialState: ThemeProviderState = {
   theme: "system",
   setTheme: () => null,
-  accentHue: 248,
+  accentHue: 320,
   setAccentHue: () => null,
 };
 
@@ -34,7 +34,7 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   );
   const [accentHue, setAccentHue] = useState<number>(
-    () => parseInt(localStorage.getItem("shiny-dollop-accent-hue") || "248")
+    () => parseInt(localStorage.getItem("shiny-dollop-accent-hue") || "320")
   );
 
   useEffect(() => {

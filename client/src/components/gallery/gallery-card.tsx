@@ -49,7 +49,7 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
 
   return (
     <article className="masonry-item group cursor-pointer" onClick={handleCardClick}>
-      <Card className="bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+      <Card className="bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden card-hover">
         {/* Cover Image */}
         <div className="relative overflow-hidden">
           <img
