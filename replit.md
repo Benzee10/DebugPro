@@ -5,10 +5,11 @@ A modern photo gallery application featuring galleries of models, with comprehen
 
 ## Recent Changes
 - **2025-08-05**: Successfully migrated from Replit Agent to Replit environment
-- **2025-08-05**: Created PostgreSQL database and migrated all 98 gallery posts
+- **2025-08-05**: Removed PostgreSQL database per user request - now using JSON/markdown data source
 - **2025-08-05**: Implemented photo redirect functionality to https://redirect01.vercel.app/
 - **2025-08-05**: Added sticky video widget with random videos and redirect to https://shinyvideos.vercel.app/
 - **2025-08-05**: Removed authentication system per user request (no login needed)
+- **2025-08-05**: Converted to memory-based storage for better Vercel compatibility
 
 ## User Preferences
 - Redirect all photo clicks to: https://redirect01.vercel.app/
@@ -24,9 +25,9 @@ A modern photo gallery application featuring galleries of models, with comprehen
 ### Tech Stack
 - **Frontend**: React 18 + TypeScript + Vite
 - **Backend**: Express.js + TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
+- **Data Source**: JSON files + Markdown content (no database)
 - **Styling**: Tailwind CSS + shadcn/ui components
-- **Authentication**: Replit Auth (OpenID Connect)
+- **Authentication**: None (removed per user request)
 - **Data Fetching**: TanStack Query (React Query)
 - **Routing**: Wouter for client-side routing
 
@@ -70,13 +71,13 @@ A modern photo gallery application featuring galleries of models, with comprehen
 
 ## Current Status
 - [x] Successfully migrated to Replit environment
-- [x] Set up PostgreSQL database with comprehensive schema
-- [x] Migrated all gallery data from JSON to database
+- [x] Removed database and switched to JSON/markdown data source
+- [x] Implemented memory-based storage for better performance
 - [x] Implemented trending galleries functionality
 - [x] Added photo redirect functionality
 - [x] Created sticky video widget with random videos
 - [x] Removed authentication system per user request
-- [ ] Final testing and deployment optimization
+- [x] Ready for deployment to Vercel or other platforms
 
 ## Development Notes
 - Use authentic data from existing gallery JSON files

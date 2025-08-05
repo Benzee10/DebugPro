@@ -3,17 +3,13 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { generateSitemap, generateRSSFeed, generateSitemapIndex } from "../client/src/lib/seo";
 import { loadGalleryData, loadGalleryPostsFromMarkdown } from "./markdown-loader";
-import { migrateGalleryData } from "./migrate-data";
+// import { migrateGalleryData } from "./migrate-data"; // Disabled - no longer using database
 import path from "path";
 import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Run data migration on startup (only migrates new data)
-  try {
-    await migrateGalleryData();
-  } catch (error) {
-    console.error('Data migration failed:', error);
-  }
+  // Database migration disabled - using JSON/markdown data instead
+  console.log('Using JSON/markdown data source - no database migration needed');
 
   // Gallery routes with new database functionality
   app.get('/api/galleries', async (req, res) => {
