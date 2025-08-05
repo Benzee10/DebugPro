@@ -1,0 +1,45 @@
+[01:15:31.790] Running build in Washington, D.C., USA (East) – iad1
+[01:15:31.791] Build machine configuration: 2 cores, 8 GB
+[01:15:31.809] Cloning github.com/Benzee10/DebugPro (Branch: main, Commit: 29de562)
+[01:15:31.957] Previous build caches not available
+[01:15:32.110] Cloning completed: 301.000ms
+[01:15:32.143] Found .vercelignore
+[01:15:32.151] Removed 44 ignored files defined in .vercelignore
+[01:15:32.151]   /.git/config
+[01:15:32.151]   /.git/description
+[01:15:32.151]   /.git/FETCH_HEAD
+[01:15:32.151]   /.git/HEAD
+[01:15:32.151]   /.git/hooks/applypatch-msg.sample
+[01:15:32.151]   /.git/hooks/commit-msg.sample
+[01:15:32.152]   /.git/hooks/fsmonitor-watchman.sample
+[01:15:32.152]   /.git/hooks/post-update.sample
+[01:15:32.152]   /.git/hooks/pre-applypatch.sample
+[01:15:32.152]   /.git/hooks/pre-commit.sample
+[01:15:32.478] Running "vercel build"
+[01:15:34.321] Vercel CLI 44.6.4
+[01:15:36.173] Installing dependencies...
+[01:15:41.934] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[01:15:41.957] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[01:15:47.349] 
+[01:15:47.350] added 666 packages in 11s
+[01:15:47.350] 
+[01:15:47.350] 146 packages are looking for funding
+[01:15:47.351]   run `npm fund` for details
+[01:15:47.674] ✘ [ERROR] Could not resolve "/vercel/path0/vite.config.production.ts"
+[01:15:47.675] 
+[01:15:47.676] [31mfailed to load config from /vercel/path0/vite.config.production.ts[39m
+[01:15:47.677] [31merror during build:
+[01:15:47.677] Error: Build failed with 1 error:
+[01:15:47.678] error: Could not resolve "/vercel/path0/vite.config.production.ts"
+[01:15:47.678]     at failureErrorWithLog (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:1472:15)
+[01:15:47.678]     at /vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:945:25
+[01:15:47.678]     at runOnEndCallbacks (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:1315:45)
+[01:15:47.678]     at buildResponseToResult (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:943:7)
+[01:15:47.678]     at /vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:970:16
+[01:15:47.678]     at responseCallbacks.<computed> (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:622:9)
+[01:15:47.678]     at handleIncomingPacket (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:677:12)
+[01:15:47.679]     at Socket.readFromStdout (/vercel/path0/node_modules/vite/node_modules/esbuild/lib/main.js:600:7)
+[01:15:47.679]     at Socket.emit (node:events:518:28)
+[01:15:47.679]     at addChunk (node:internal/streams/readable:561:12)[39m
+[01:15:47.685] Error: Command "vite build --config vite.config.production.ts" exited with 1
+[01:15:51.383] Exiting build container

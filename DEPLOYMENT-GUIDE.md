@@ -30,6 +30,10 @@
 - **Issue**: Vite build error "Could not resolve entry module 'index.html'" during Vercel build
 - **Solution**: Updated vercel.json to use production Vite config with proper root and output directory settings
 
+### 8. Vite Config File Resolution Error
+- **Issue**: Vercel error "Could not resolve vite.config.production.ts" - config file was being excluded
+- **Solution**: Removed vite.config files from .vercelignore and added explicit input path in rollupOptions
+
 ## Current Structure
 
 ```
