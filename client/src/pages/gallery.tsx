@@ -62,7 +62,7 @@ export default function GalleryPage() {
     );
   }
 
-  const formattedDate = format(new Date(post.date), "MMMM d, yyyy 'at' h:mm a");
+  const formattedDate = post.publishedAt ? format(new Date(post.publishedAt), "MMMM d, yyyy 'at' h:mm a") : format(new Date(), "MMMM d, yyyy 'at' h:mm a");
   
   const openLightbox = (index: number) => {
     setSelectedImageIndex(index);

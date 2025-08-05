@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Lightbox } from "./lightbox";
-import type { GalleryPost } from "@shared/schema";
+import type { Gallery } from "@shared/schema";
 
 interface GalleryGridProps {
-  posts: GalleryPost[];
+  posts: Gallery[];
   title?: string;
   description?: string;
 }
 
 export function GalleryGrid({ posts, title = "Featured Galleries", description = "Curated collections from our talented models" }: GalleryGridProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<GalleryPost | null>(null);
+  const [selectedPost, setSelectedPost] = useState<Gallery | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const openLightbox = (post: GalleryPost, imageIndex: number = 0) => {
+  const openLightbox = (post: Gallery, imageIndex: number = 0) => {
     setSelectedPost(post);
     setSelectedImageIndex(imageIndex);
     setLightboxOpen(true);

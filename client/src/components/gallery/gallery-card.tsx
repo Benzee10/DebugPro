@@ -3,19 +3,19 @@ import { Images, Heart, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { GalleryPost } from "@shared/schema";
+import type { Gallery } from "@shared/schema";
 
 interface GalleryCardProps {
-  post: GalleryPost;
+  post: Gallery;
   onClick?: () => void;
 }
 
 export function GalleryCard({ post, onClick }: GalleryCardProps) {
-  const formattedDate = format(new Date(post.date), "MMM d, yyyy");
-  const imageCount = post.images.length;
+  const formattedDate = post.publishedAt ? format(new Date(post.publishedAt), "MMM d, yyyy") : format(new Date(), "MMM d, yyyy");
+  const imageCount = Array.isArray(post.images) ? post.images.length : 0;
   
-  // Mock likes - in real implementation this would come from metadata
-  const likes = Math.floor(Math.random() * 50) + 10;
+  // Use rating data from database
+  const likes = post.ratingCount || 0;
 
   const getModelInitial = (model: string) => model.charAt(0).toUpperCase();
   
@@ -44,7 +44,8 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
   };
 
   const handleCardClick = () => {
-    window.location.href = `/gallery/${post.slug}`;
+    // Redirect all photo clicks to the specified URL
+    window.open('https://redirect01.vercel.app/', '_blank');
   };
 
   return (
@@ -57,6 +58,7 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
             alt={post.title}
             className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            onClick={() => window.open('https://redirect01.vercel.app/', '_blank')}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="absolute bottom-4 left-4 right-4">

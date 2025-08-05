@@ -7,12 +7,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
-import type { GalleryPost, Model, GalleryData } from "@shared/schema";
+import type { Gallery } from "@shared/schema";
+
+interface GalleryData {
+  posts: Gallery[];
+  models: any[];
+  categories: any[];
+  tags: any[];
+}
 
 interface SidebarProps {
-  posts: GalleryPost[];
+  posts: Gallery[];
   galleryData: GalleryData;
-  onFiltersChange?: (posts: GalleryPost[]) => void;
+  onFiltersChange?: (posts: Gallery[]) => void;
 }
 
 export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {

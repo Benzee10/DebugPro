@@ -6,6 +6,7 @@ import { AdBanner } from "@/components/ads/ad-banner";
 import { updatePageMeta } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
 import type { Gallery } from "@shared/schema";
+import type { GalleryData } from "@/lib/types";
 
 export default function Home() {
   const [filteredPosts, setFilteredPosts] = useState<Gallery[]>([]);
