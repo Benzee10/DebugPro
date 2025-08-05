@@ -58,8 +58,8 @@ export default function ModelsPage() {
   }
 
   // Calculate stats for each model
-  const modelsWithStats = galleryData.models.map(model => {
-    const modelPosts = galleryData.posts.filter(post => post.model === model.slug);
+  const modelsWithStats = (galleryData.models || []).map(model => {
+    const modelPosts = galleryData.posts?.filter(post => post.model === model.slug) || [];
     const totalLikes = modelPosts.length * 150; // Estimated likes per post
     const latestPost = modelPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
     

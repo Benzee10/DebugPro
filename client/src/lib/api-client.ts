@@ -8,7 +8,7 @@ export async function fetchGalleryData(): Promise<GalleryData> {
   }
 
   try {
-    const response = await fetch('/api/galleries');
+    const response = await fetch('/api/gallery-data');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

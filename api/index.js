@@ -183,6 +183,58 @@ function handler(req, res) {
       }));
       
       res.status(200).json({ galleries });
+    } else if (url === '/api/gallery-data') {
+      const data = loadGalleryData();
+      const posts = data?.posts || [];
+      
+      // Extract unique models, categories, and tags
+      const models = [...new Set(posts.map(p => p.model))].map(modelSlug => ({
+        name: modelSlug === "mila-azul" ? "Mila Azul" : modelSlug,
+        slug: modelSlug,
+        avatar: posts.find(p => p.model === modelSlug)?.cover || "",
+        bio: `Model with ${posts.filter(p => p.model === modelSlug).length} galleries`,
+        galleryCount: posts.filter(p => p.model === modelSlug).length,
+        totalLikes: 0,
+        joinDate: new Date().toISOString()
+      }));
+      
+      const categories = [...new Set(posts.map(p => p.category))];
+      const tags = [...new Set(posts.flatMap(p => p.tags || []))];
+      
+      const galleryData = {
+        posts: posts.map(post => ({
+          id: post.slug,
+          title: post.title,
+          description: post.description,
+          slug: post.slug,
+          model: post.model,
+          category: post.category,
+          cover: post.cover,
+          images: post.images,
+          tags: post.tags,
+          date: post.date
+        })),
+        models,
+        categories,
+        tags
+      };
+      
+      res.status(200).json(galleryData);
+    } else if (url === '/api/models') {
+      const data = loadGalleryData();
+      const posts = data?.posts || [];
+      
+      const models = [...new Set(posts.map(p => p.model))].map(modelSlug => ({
+        name: modelSlug === "mila-azul" ? "Mila Azul" : modelSlug,
+        slug: modelSlug,
+        avatar: posts.find(p => p.model === modelSlug)?.cover || "",
+        bio: `Model with ${posts.filter(p => p.model === modelSlug).length} galleries`,
+        galleryCount: posts.filter(p => p.model === modelSlug).length,
+        totalLikes: 0,
+        joinDate: new Date().toISOString()
+      }));
+      
+      res.status(200).json({ models });
     } else if (url.startsWith('/api/galleries/') && url.includes('/')) {
       // Handle individual gallery requests like /api/galleries/mila-azul/sunset-dreams
       const pathParts = url.split('/');

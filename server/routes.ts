@@ -53,6 +53,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Models endpoint
+  app.get('/api/models', async (req, res) => {
+    try {
+      const models = await storage.getAllModels();
+      res.json({ models });
+    } catch (error) {
+      console.error('Error fetching models:', error);
+      res.status(500).json({ error: 'Failed to fetch models' });
+    }
+  });
+
+  // Gallery data endpoint (complete data structure)
+  app.get('/api/gallery-data', async (req, res) => {
+    try {
+      // Get all data needed for archive and models pages
+      const galleriesResult = await storage.getAllGalleries(1, 1000); // Get all galleries
+      const models = await storage.getAllModels();
+      const categories = await storage.getCategories();
+      const tags = await storage.getTags();
+      
+      const galleryData = {
+        posts: galleriesResult.galleries.map(g => ({
+          id: g.id,
+          title: g.title,
+          description: g.description,
+          slug: g.slug,
+          model: g.model,
+          category: g.category,
+          cover: g.cover,
+          images: g.images,
+          tags: g.tags,
+          date: g.publishedAt.toISOString()
+        })),
+        models,
+        categories,
+        tags
+      };
+      
+      res.json(galleryData);
+    } catch (error) {
+      console.error('Error fetching gallery data:', error);
+      res.status(500).json({ error: 'Failed to fetch gallery data' });
+    }
+  });
+
   // Legacy route with database support
   app.get("/api/galleries/:model/:slug", async (req, res) => {
     try {

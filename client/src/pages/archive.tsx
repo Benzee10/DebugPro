@@ -17,7 +17,21 @@ export default function ArchivePage() {
   // Load gallery data
   useEffect(() => {
     fetchGalleryData().then(data => {
-      setGalleryData(data);
+      // Convert Gallery[] to GalleryPost[] format for archive compatibility
+      const convertedData = {
+        ...data,
+        posts: (data.posts || []).map(post => ({
+          ...post,
+          id: post.id || post.slug,
+          publishedAt: new Date(post.date),
+          viewCount: 0,
+          averageRating: "0",
+          ratingCount: 0,
+          createdAt: new Date(post.date),
+          updatedAt: new Date(post.date)
+        }))
+      };
+      setGalleryData(convertedData);
     });
   }, []);
 
@@ -27,7 +41,7 @@ export default function ArchivePage() {
     
     const grouped: { [year: string]: GalleryPost[] } = {};
     
-    galleryData.posts.forEach(post => {
+    (galleryData.posts || []).forEach(post => {
       const year = new Date(post.date).getFullYear().toString();
       if (!grouped[year]) {
         grouped[year] = [];
@@ -47,7 +61,7 @@ export default function ArchivePage() {
   const filteredPosts = useMemo(() => {
     if (!galleryData) return [];
     
-    let posts = galleryData.posts;
+    let posts = galleryData.posts || [];
 
     if (selectedYear !== "all") {
       posts = posts.filter(post => 
@@ -77,7 +91,7 @@ export default function ArchivePage() {
       <div className="flex">
         {galleryData && (
           <Sidebar
-            posts={galleryData.posts}
+            posts={galleryData.posts || []}
             galleryData={galleryData}
             onFiltersChange={() => {}}
           />
@@ -224,7 +238,23 @@ export default function ArchivePage() {
 
           {/* Gallery Grid */}
           <GalleryGrid 
-            posts={filteredPosts}
+            posts={filteredPosts.map(post => ({
+              id: post.id || post.slug,
+              title: post.title,
+              description: post.description,
+              slug: post.slug,
+              model: post.model,
+              category: post.category,
+              cover: post.cover,
+              images: post.images,
+              tags: post.tags || [],
+              publishedAt: new Date(post.date),
+              viewCount: 0,
+              averageRating: "0",
+              ratingCount: 0,
+              createdAt: new Date(post.date),
+              updatedAt: new Date(post.date)
+            }))}
             title=""
             description=""
           />
