@@ -6,24 +6,24 @@ import { AdBanner } from "@/components/ads/ad-banner";
 import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import { updatePageMeta } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
+import { fetchGalleryData } from "@/lib/api-client";
 import type { Gallery } from "@shared/schema";
-import type { GalleryData } from "@/lib/types";
 
 export default function Home() {
-  const [filteredPosts, setFilteredPosts] = useState<Gallery[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
+  const [galleryData, setGalleryData] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
 
-  // Load gallery data from new database API
-  const { data: galleriesData, isLoading } = useQuery<{
-    galleries: Gallery[];
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  }>({
-    queryKey: ['/api/galleries'],
-  });
+  // Load gallery data with complete models, categories, tags
+  useEffect(() => {
+    fetchGalleryData().then(data => {
+      setGalleryData(data);
+      setFilteredPosts(data.posts || []);
+    }).catch(error => {
+      console.error('Failed to load gallery data:', error);
+    });
+  }, []);
 
   const { data: trendingData } = useQuery<{
     galleries: Gallery[];
@@ -31,12 +31,7 @@ export default function Home() {
     queryKey: ['/api/galleries/trending'],
   });
 
-  // Update filtered posts when data loads
-  useEffect(() => {
-    if (galleriesData?.galleries) {
-      setFilteredPosts(galleriesData.galleries);
-    }
-  }, [galleriesData]);
+  // Remove the old useEffect that was using galleriesData
 
   // Update SEO for homepage
   useEffect(() => {
@@ -59,10 +54,10 @@ export default function Home() {
       <Header />
       
       <div className="flex">
-        {galleriesData?.galleries && (
+        {galleryData && (
           <Sidebar
-            posts={galleriesData.galleries}
-            galleryData={{ posts: galleriesData.galleries, models: [], categories: [], tags: [] }}
+            posts={galleryData.posts || []}
+            galleryData={galleryData}
             onFiltersChange={handleFiltersChange}
           />
         )}
@@ -84,7 +79,7 @@ export default function Home() {
           )}
           
           {/* Gallery Content */}
-          {isLoading ? (
+          {!galleryData ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-lg text-muted-foreground">Loading galleries...</div>
             </div>
