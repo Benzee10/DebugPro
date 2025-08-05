@@ -1,12 +1,7 @@
 {
   "version": 2,
   "buildCommand": "vite build",
-  "outputDirectory": "client/dist",
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node"
-    }
-  },
+  "outputDirectory": "dist/public",
   "routes": [
     {
       "src": "/sitemap\\.xml",

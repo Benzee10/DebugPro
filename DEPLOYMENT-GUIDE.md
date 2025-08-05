@@ -14,6 +14,14 @@
 - **Issue**: Mixed ESM and CommonJS causing compilation errors
 - **Solution**: Created `api/index.js` (plain JavaScript) instead of TypeScript to avoid build complexity
 
+### 4. Runtime Version Error
+- **Issue**: Vercel error "Function Runtimes must have a valid version"
+- **Solution**: Removed explicit functions configuration from vercel.json - Vercel auto-detects API functions
+
+### 5. Output Directory Mismatch
+- **Issue**: vercel.json outputDirectory didn't match Vite build output path
+- **Solution**: Updated outputDirectory to "dist/public" to match vite.config.ts build.outDir
+
 ## Current Structure
 
 ```
