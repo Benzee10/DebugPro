@@ -4,29 +4,36 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
 import { AdBanner } from "@/components/ads/ad-banner";
 import { updatePageMeta } from "@/lib/seo";
-import { fetchGalleryData } from "@/lib/api-client";
-import type { GalleryPost, GalleryData } from "@shared/schema";
+import { useQuery } from "@tanstack/react-query";
+import type { Gallery } from "@shared/schema";
 
 export default function Home() {
-  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
-  const [filteredPosts, setFilteredPosts] = useState<GalleryPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Gallery[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
 
-  // Load gallery data from API
+  // Load gallery data from new database API
+  const { data: galleriesData, isLoading } = useQuery({
+    queryKey: ['/api/galleries'],
+  });
+
+  const { data: trendingData } = useQuery({
+    queryKey: ['/api/galleries/trending'],
+  });
+
+  // Update filtered posts when data loads
   useEffect(() => {
-    fetchGalleryData().then(data => {
-      setGalleryData(data);
-      setFilteredPosts(data.posts);
-    });
-  }, []);
+    if (galleriesData?.galleries) {
+      setFilteredPosts(galleriesData.galleries);
+    }
+  }, [galleriesData]);
 
   // Update SEO for homepage
   useEffect(() => {
     updatePageMeta();
   }, []);
 
-  const handleFiltersChange = (posts: GalleryPost[]) => {
+  const handleFiltersChange = (posts: Gallery[]) => {
     setFilteredPosts(posts);
     setCurrentPage(1); // Reset to first page when filters change
   };
@@ -42,10 +49,10 @@ export default function Home() {
       <Header />
       
       <div className="flex">
-        {galleryData && (
+        {galleriesData?.galleries && (
           <Sidebar
-            posts={galleryData.posts}
-            galleryData={galleryData}
+            posts={galleriesData.galleries}
+            galleryData={{ posts: galleriesData.galleries, models: [], categories: [], tags: [] }}
             onFiltersChange={handleFiltersChange}
           />
         )}
@@ -54,12 +61,30 @@ export default function Home() {
           {/* Top Ad */}
           <AdBanner position="top" className="mb-8" />
           
+          {/* Trending Section */}
+          {trendingData?.galleries && trendingData.galleries.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold mb-6 text-foreground">🔥 Trending Now</h2>
+              <GalleryGrid 
+                posts={trendingData.galleries.slice(0, 3)} 
+                title=""
+                description=""
+              />
+            </div>
+          )}
+          
           {/* Gallery Content */}
-          <GalleryGrid 
-            posts={currentPosts} 
-            title="Latest Galleries"
-            description="Discover our newest photo collections featuring Mila Azul"
-          />
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-lg text-muted-foreground">Loading galleries...</div>
+            </div>
+          ) : (
+            <GalleryGrid 
+              posts={currentPosts} 
+              title="Latest Galleries"
+              description="Discover our newest photo collections"
+            />
+          )}
           
           {/* Mid-scroll Ad after first 3 posts */}
           {currentPosts.length > 3 && (

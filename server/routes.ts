@@ -3,11 +3,17 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { generateSitemap, generateRSSFeed, generateSitemapIndex } from "../client/src/lib/seo";
 import { loadGalleryData, loadGalleryPostsFromMarkdown } from "./markdown-loader";
-import { insertFavoriteSchema, insertRatingSchema, insertViewSchema } from "@shared/schema";
+import { migrateGalleryData } from "./migrate-data";
 import path from "path";
 import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Run data migration on startup (only migrates new data)
+  try {
+    await migrateGalleryData();
+  } catch (error) {
+    console.error('Data migration failed:', error);
+  }
 
   // Gallery routes with new database functionality
   app.get('/api/galleries', async (req, res) => {
@@ -70,13 +76,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json(post);
       }
       
-      // Record view (anonymous or authenticated)
-      const userId = (req as any).user?.claims?.sub || null;
+      // Record anonymous view
       const ipAddress = req.ip;
       const userAgent = req.get('User-Agent');
       
       try {
-        await storage.recordView(userId, gallery.id, ipAddress, userAgent);
+        await storage.recordView(null, gallery.id, ipAddress, userAgent);
       } catch (viewError) {
         console.error('Error recording view:', viewError);
       }
@@ -115,86 +120,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Favorites routes
-  app.get('/api/favorites', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 20;
-      const result = await storage.getUserFavorites(userId, page, limit);
-      res.json({
-        galleries: result.galleries,
-        total: result.total,
-        page,
-        limit,
-        totalPages: Math.ceil(result.total / limit)
-      });
-    } catch (error) {
-      console.error('Error fetching favorites:', error);
-      res.status(500).json({ error: 'Failed to fetch favorites' });
-    }
-  });
 
-  app.post('/api/favorites', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { galleryId } = insertFavoriteSchema.parse(req.body);
-      const favorite = await storage.addToFavorites(userId, galleryId);
-      res.json({ favorite });
-    } catch (error) {
-      console.error('Error adding to favorites:', error);
-      res.status(500).json({ error: 'Failed to add to favorites' });
-    }
-  });
-
-  app.delete('/api/favorites/:galleryId', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { galleryId } = req.params;
-      await storage.removeFromFavorites(userId, galleryId);
-      res.json({ success: true });
-    } catch (error) {
-      console.error('Error removing from favorites:', error);
-      res.status(500).json({ error: 'Failed to remove from favorites' });
-    }
-  });
-
-  app.get('/api/favorites/:galleryId/check', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { galleryId } = req.params;
-      const isFavorited = await storage.isFavorited(userId, galleryId);
-      res.json({ isFavorited });
-    } catch (error) {
-      console.error('Error checking favorite status:', error);
-      res.status(500).json({ error: 'Failed to check favorite status' });
-    }
-  });
-
-  // Rating routes
-  app.post('/api/ratings', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { galleryId, rating } = insertRatingSchema.parse(req.body);
-      const ratingRecord = await storage.rateGallery(userId, galleryId, rating);
-      res.json({ rating: ratingRecord });
-    } catch (error) {
-      console.error('Error rating gallery:', error);
-      res.status(500).json({ error: 'Failed to rate gallery' });
-    }
-  });
-
-  app.get('/api/ratings/:galleryId', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { galleryId } = req.params;
-      const rating = await storage.getUserRating(userId, galleryId);
-      res.json({ rating });
-    } catch (error) {
-      console.error('Error fetching user rating:', error);
-      res.status(500).json({ error: 'Failed to fetch user rating' });
-    }
-  });
 
   // Model routes
   app.get("/api/models", async (req, res) => {
