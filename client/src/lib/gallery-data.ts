@@ -145,6 +145,23 @@ export const sampleGalleryPosts: GalleryPost[] = [
       { src: "https://cdn.elitebabes.com/content/250665/0019-14_1200.jpg", alt: "Image 14" },
       { src: "https://cdn.elitebabes.com/content/250665/0019-15_1200.jpg", alt: "Image 15" }
     ]
+  },
+  {
+    slug: "mila-azul/azure-dream",
+    title: "Mila Azul in Azure Dream",
+    description: "Mila Azul showcases ethereal beauty in this dreamy blue-themed gallery collection.",
+    date: "2025-08-05T12:00:00",
+    tags: ["Mila Azul", "Azure Dream", "Metart", "Gallery", "Blue Theme"],
+    model: "mila-azul",
+    category: "Metart",
+    cover: "https://example.com/azure-dream/cover.jpg",
+    images: [
+      { src: "https://example.com/azure-dream/image-01.jpg", alt: "Image 1" },
+      { src: "https://example.com/azure-dream/image-02.jpg", alt: "Image 2" },
+      { src: "https://example.com/azure-dream/image-03.jpg", alt: "Image 3" },
+      { src: "https://example.com/azure-dream/image-04.jpg", alt: "Image 4" },
+      { src: "https://example.com/azure-dream/image-05.jpg", alt: "Image 5" }
+    ]
   }
 ];
 
@@ -154,7 +171,7 @@ export const sampleModels: Model[] = [
     slug: "mila-azul",
     avatar: "https://cdn.elitebabes.com/content/250746/0004-01_1200.jpg",
     bio: "Stunning Ukrainian model featured in exclusive Metart, Ultra Films, and Wow Girls productions.",
-    galleryCount: 5,
+    galleryCount: 6,
     totalLikes: 892,
     joinDate: "2024-01-15"
   }
@@ -164,7 +181,7 @@ export const galleryData: GalleryData = {
   posts: sampleGalleryPosts,
   models: sampleModels,
   categories: ["Metart X", "Metart", "Ultra Films", "Wow Girls"],
-  tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery", "Candy Kiss", "Erotic Beauty", "Schoolwork", "NSFW", "Study Seduction", "Shades of Quiet", "Nude Art", "Slick Skin", "Erotic Rhythm"]
+  tags: ["Mila Azul", "Lace", "Morning", "MetartX", "Sensual", "Gallery", "Candy Kiss", "Erotic Beauty", "Schoolwork", "NSFW", "Study Seduction", "Shades of Quiet", "Nude Art", "Slick Skin", "Erotic Rhythm", "Azure Dream", "Blue Theme"]
 };
 
 export function getGalleryPost(slug: string): GalleryPost | undefined {
