@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import { useSearch } from "@/hooks/use-search";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,12 +20,24 @@ interface SidebarProps {
   posts: Gallery[];
   galleryData: GalleryData;
   onFiltersChange?: (posts: Gallery[]) => void;
+  initialTagFilter?: string | null;
 }
 
-export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {
+export interface SidebarRef {
+  applyTagFilter: (tag: string) => void;
+}
+
+export const Sidebar = forwardRef<SidebarRef, SidebarProps>(({ posts, galleryData, onFiltersChange, initialTagFilter }, ref) => {
   const { accentHue, setAccentHue } = useTheme();
   const { filters, updateFilter, filteredPosts } = useSearch(posts);
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Expose methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    applyTagFilter: (tag: string) => {
+      updateFilter('tags', [tag]);
+    }
+  }), [updateFilter]);
 
   // Track if this is the initial load to avoid triggering filter changes on mount
   const [isInitialized, setIsInitialized] = React.useState(false);
@@ -218,4 +230,4 @@ export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {
       )}
     </aside>
   );
-}
+});

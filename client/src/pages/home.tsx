@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
@@ -14,6 +14,8 @@ export default function Home() {
   const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   const [galleryData, setGalleryData] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [initialTagFilter, setInitialTagFilter] = useState<string | null>(null);
+  const sidebarRef = useRef<{ applyTagFilter: (tag: string) => void } | null>(null);
   
   // Scroll to top when page changes
   useEffect(() => {
@@ -21,16 +23,29 @@ export default function Home() {
   }, [currentPage]);
   const postsPerPage = 12;
 
+  // Check for URL parameters on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tagParam = urlParams.get('tag');
+    if (tagParam) {
+      setInitialTagFilter(tagParam);
+    }
+  }, []);
+
   // Load gallery data with complete models, categories, tags
   useEffect(() => {
     fetchGalleryData().then(data => {
       setGalleryData(data);
       setFilteredPosts(data.posts || []);
 
+      // Apply tag filter if there's one in URL
+      if (initialTagFilter && sidebarRef.current) {
+        sidebarRef.current.applyTagFilter(initialTagFilter);
+      }
     }).catch(error => {
       console.error('Failed to load gallery data:', error);
     });
-  }, []);
+  }, [initialTagFilter]);
 
   const { data: trendingData } = useQuery<{
     galleries: Gallery[];
@@ -67,9 +82,11 @@ export default function Home() {
       <div className="flex">
         {galleryData && (
           <Sidebar
+            ref={sidebarRef}
             posts={galleryData.posts || []}
             galleryData={galleryData}
             onFiltersChange={handleFiltersChange}
+            initialTagFilter={initialTagFilter}
           />
         )}
         

@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 import Fuse from "fuse.js";
-import type { GalleryPost, SearchFilters } from "@shared/schema";
+import type { Gallery, SearchFilters } from "@shared/schema";
 
-export function useSearch(posts: GalleryPost[]) {
+export function useSearch(posts: Gallery[]) {
   const [filters, setFilters] = useState<SearchFilters>({
     query: "",
     models: [],
@@ -45,7 +45,7 @@ export function useSearch(posts: GalleryPost[]) {
     // Tags filter
     if (filters.tags && filters.tags.length > 0) {
       result = result.filter(post => 
-        filters.tags!.some(tag => post.tags.includes(tag))
+        post.tags && filters.tags!.some(tag => post.tags.includes(tag))
       );
     }
 
@@ -66,7 +66,7 @@ export function useSearch(posts: GalleryPost[]) {
           break;
       }
       
-      result = result.filter(post => new Date(post.date) >= filterDate);
+      result = result.filter(post => new Date(post.publishedAt || post.createdAt || new Date()) >= filterDate);
     }
 
     // Sort
@@ -75,8 +75,8 @@ export function useSearch(posts: GalleryPost[]) {
       
       switch (filters.sortBy) {
         case "date":
-          aValue = new Date(a.date);
-          bValue = new Date(b.date);
+          aValue = new Date(a.publishedAt || a.createdAt || new Date());
+          bValue = new Date(b.publishedAt || b.createdAt || new Date());
           break;
         case "title":
           aValue = a.title.toLowerCase();

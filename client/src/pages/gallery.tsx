@@ -100,8 +100,8 @@ export default function GalleryPage() {
   };
 
   const handleTagClick = (tag: string) => {
-    // Navigate to home page with tag filter
-    setLocation(`/?tag=${encodeURIComponent(tag)}`);
+    // Navigate to home page and let the URL parameter handle the filtering
+    window.location.href = `/?tag=${encodeURIComponent(tag)}`;
   };
 
   return (
