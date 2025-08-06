@@ -32,8 +32,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get('/api/galleries/trending', async (req, res) => {
     try {
-      const limit = parseInt(req.query.limit as string) || 10;
+      const limit = parseInt(req.query.limit as string) || 5;
       const galleries = await storage.getTrendingGalleries(limit);
+      console.log('Returning trending galleries:', galleries.length);
       res.json({ galleries });
     } catch (error) {
       console.error('Error fetching trending galleries:', error);

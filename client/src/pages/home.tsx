@@ -21,6 +21,7 @@ export default function Home() {
     fetchGalleryData().then(data => {
       setGalleryData(data);
       setFilteredPosts(data.posts || []);
+
     }).catch(error => {
       console.error('Failed to load gallery data:', error);
     });
@@ -49,6 +50,8 @@ export default function Home() {
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
   const currentPosts = filteredPosts.slice(startIndex, endIndex);
+  
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,7 +78,7 @@ export default function Home() {
                 <p className="text-gray-600 dark:text-gray-400">Most popular galleries this week</p>
               </div>
               <div className="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-6">
-                {trendingData.galleries.slice(0, 3).map((post) => (
+                {trendingData.galleries.slice(0, 5).map((post) => (
                   <div key={post.slug} className="masonry-item">
                     <GalleryCard
                       post={post}
