@@ -21,9 +21,7 @@ export default function GalleryPage() {
 
   // Load post data
   useEffect(() => {
-    console.log('Loading gallery post for slug:', slug);
     fetchGalleryPost(slug).then(postData => {
-      console.log('Gallery post loaded:', postData);
       setPost(postData);
       setLoading(false);
     }).catch(error => {

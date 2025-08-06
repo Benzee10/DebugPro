@@ -3,6 +3,7 @@ import { Images, Heart, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { Gallery } from "@shared/schema";
 
 interface GalleryCardProps {
@@ -133,7 +134,9 @@ export function GalleryCard({ post, onClick, onImageClick }: GalleryCardProps) {
               )}
             </div>
             <Link href={`/gallery/${post.slug}`}>
-              <ArrowRight className="text-primary hover:text-primary/80 transition-colors" size={16} />
+              <Button variant="outline" size="sm" className="text-xs">
+                View Gallery
+              </Button>
             </Link>
           </div>
         </CardContent>
