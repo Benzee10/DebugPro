@@ -118,7 +118,7 @@ export function Lightbox({
             <span>{images.length}</span>
             <span className="text-gray-300">•</span>
             <span className="font-medium">
-              {title} - {currentImage.caption || `Image ${currentIndex + 1}`}
+              {title}
             </span>
           </div>
         </div>

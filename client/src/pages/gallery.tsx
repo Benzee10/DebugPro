@@ -175,11 +175,6 @@ export default function GalleryPage() {
                   <Images className="text-white" size={24} />
                 </div>
               </div>
-              {image.caption && (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
-                  <p className="text-white text-sm">{image.caption}</p>
-                </div>
-              )}
             </div>
           ))}
         </div>
@@ -205,11 +200,6 @@ export default function GalleryPage() {
                   <Images className="text-white" size={24} />
                 </div>
               </div>
-              {image.caption && (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
-                  <p className="text-white text-sm">{image.caption}</p>
-                </div>
-              )}
             </div>
           ))}
         </div>
