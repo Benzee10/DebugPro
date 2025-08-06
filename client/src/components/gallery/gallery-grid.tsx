@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Link } from "wouter";
-import { Lightbox } from "./lightbox";
+import { useLocation } from "wouter";
 import { GalleryCard } from "./gallery-card";
 import type { Gallery } from "@shared/schema";
 
@@ -11,33 +9,7 @@ interface GalleryGridProps {
 }
 
 export function GalleryGrid({ posts, title = "Featured Galleries", description = "Curated collections from our talented models" }: GalleryGridProps) {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<Gallery | null>(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-
-  const openLightbox = (post: Gallery, imageIndex: number = 0) => {
-    setSelectedPost(post);
-    setSelectedImageIndex(imageIndex);
-    setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-    setSelectedPost(null);
-    setSelectedImageIndex(0);
-  };
-
-  const nextImage = () => {
-    if (selectedPost && selectedImageIndex < selectedPost.images.length - 1) {
-      setSelectedImageIndex(selectedImageIndex + 1);
-    }
-  };
-
-  const previousImage = () => {
-    if (selectedImageIndex > 0) {
-      setSelectedImageIndex(selectedImageIndex - 1);
-    }
-  };
+  const [, setLocation] = useLocation();
 
   if (posts.length === 0) {
     return (
@@ -65,24 +37,14 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
           <div key={post.slug} className="masonry-item">
             <GalleryCard
               post={post}
-              onImageClick={openLightbox}
+              onImageClick={(post) => {
+                // Navigate to individual gallery post
+                setLocation(`/gallery/${post.slug}`);
+              }}
             />
           </div>
         ))}
       </div>
-
-      {/* Lightbox */}
-      {lightboxOpen && selectedPost && (
-        <Lightbox
-          isOpen={lightboxOpen}
-          images={selectedPost.images}
-          currentIndex={selectedImageIndex}
-          title={selectedPost.title}
-          onClose={closeLightbox}
-          onNext={nextImage}
-          onPrevious={previousImage}
-        />
-      )}
     </>
   );
 }
