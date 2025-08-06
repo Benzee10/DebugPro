@@ -43,7 +43,6 @@ export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {
     
     const filtersChanged = JSON.stringify(prevFiltersRef.current) !== JSON.stringify(filters);
     if (filtersChanged) {
-      console.log('Filters actually changed, updating parent');
       prevFiltersRef.current = { ...filters };
       onFiltersChange?.(filteredPosts);
     }

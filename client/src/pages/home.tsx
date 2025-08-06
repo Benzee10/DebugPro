@@ -14,6 +14,11 @@ export default function Home() {
   const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   const [galleryData, setGalleryData] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
   const postsPerPage = 12;
 
   // Load gallery data with complete models, categories, tags
@@ -41,7 +46,6 @@ export default function Home() {
   }, []);
 
   const handleFiltersChange = (posts: Gallery[]) => {
-    console.log('Filters changed, resetting to page 1. Posts count:', posts.length);
     setFilteredPosts(posts);
     setCurrentPage(1); // Reset to first page when filters change
   };
@@ -52,13 +56,7 @@ export default function Home() {
   const endIndex = startIndex + postsPerPage;
   const currentPosts = filteredPosts.slice(startIndex, endIndex);
   
-  // Debug current page state
-  console.log('Current pagination state:', {
-    currentPage,
-    totalPages,
-    totalGalleries: filteredPosts.length,
-    currentPostsCount: currentPosts.length
-  });
+
   
 
 
@@ -129,7 +127,6 @@ export default function Home() {
                   e.preventDefault();
                   e.stopPropagation();
                   const newPage = Math.max(1, currentPage - 1);
-                  console.log('Previous clicked, current page:', currentPage, 'new page:', newPage);
                   setCurrentPage(newPage);
                 }}
                 disabled={currentPage === 1}
@@ -159,7 +156,6 @@ export default function Home() {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Page number clicked:', pageNum, 'current:', currentPage);
                         setCurrentPage(pageNum);
                       }}
                       className={`px-3 py-2 rounded-lg transition-colors ${
@@ -180,7 +176,6 @@ export default function Home() {
                   e.preventDefault();
                   e.stopPropagation();
                   const newPage = Math.min(totalPages, currentPage + 1);
-                  console.log('Next clicked, current page:', currentPage, 'new page:', newPage);
                   setCurrentPage(newPage);
                 }}
                 disabled={currentPage === totalPages}
