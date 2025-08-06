@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/hooks/use-theme";
 import type { Gallery } from "@shared/schema";
 
 interface GalleryCardProps {
@@ -13,6 +14,7 @@ interface GalleryCardProps {
 }
 
 export function GalleryCard({ post, onClick, onImageClick }: GalleryCardProps) {
+  const { accentHue } = useTheme();
   const formattedDate = post.publishedAt ? format(new Date(post.publishedAt), "MMM d, yyyy") : format(new Date(), "MMM d, yyyy");
   const imageCount = Array.isArray(post.images) ? post.images.length : 0;
   
@@ -134,7 +136,23 @@ export function GalleryCard({ post, onClick, onImageClick }: GalleryCardProps) {
               )}
             </div>
             <Link href={`/gallery/${post.slug}`}>
-              <Button variant="outline" size="sm" className="text-xs">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="text-xs"
+                style={{
+                  borderColor: `hsl(${accentHue}, 70%, 50%)`,
+                  color: `hsl(${accentHue}, 70%, 50%)`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = `hsl(${accentHue}, 70%, 50%)`;
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = `hsl(${accentHue}, 70%, 50%)`;
+                }}
+              >
                 View Gallery
               </Button>
             </Link>

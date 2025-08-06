@@ -4,6 +4,7 @@
 A modern photo gallery application featuring galleries of models, with comprehensive search, filtering, and user interaction features. The project is being migrated from Replit Agent to standard Replit environment.
 
 ## Recent Changes
+- **2025-08-06**: Added "View Gallery" buttons to gallery cards that follow theme color slider
 - **2025-08-06**: Successfully replaced infinite scroll with pagination system (12 galleries per page)
 - **2025-08-06**: Fixed pagination button functionality by resolving sidebar filter state conflicts
 - **2025-08-06**: Added smooth scroll to top when pagination changes for better UX
