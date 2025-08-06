@@ -14,7 +14,7 @@ export default function Home() {
   const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   const [galleryData, setGalleryData] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
+  const postsPerPage = 12;
 
   // Load gallery data with complete models, categories, tags
   useEffect(() => {
@@ -50,6 +50,14 @@ export default function Home() {
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
   const currentPosts = filteredPosts.slice(startIndex, endIndex);
+  
+  // Debug current page state
+  console.log('Current pagination state:', {
+    currentPage,
+    totalPages,
+    totalGalleries: filteredPosts.length,
+    currentPostsCount: currentPosts.length
+  });
   
 
 
@@ -115,7 +123,14 @@ export default function Home() {
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-4 mt-12">
               <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const newPage = Math.max(1, currentPage - 1);
+                  console.log('Previous clicked, current page:', currentPage, 'new page:', newPage);
+                  setCurrentPage(newPage);
+                }}
                 disabled={currentPage === 1}
                 className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               >
@@ -138,8 +153,14 @@ export default function Home() {
                   
                   return (
                     <button
-                      key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
+                      key={`page-${pageNum}`}
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Page number clicked:', pageNum, 'current:', currentPage);
+                        setCurrentPage(pageNum);
+                      }}
                       className={`px-3 py-2 rounded-lg transition-colors ${
                         currentPage === pageNum
                           ? 'bg-blue-600 text-white'
@@ -153,7 +174,14 @@ export default function Home() {
               </div>
               
               <button
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const newPage = Math.min(totalPages, currentPage + 1);
+                  console.log('Next clicked, current page:', currentPage, 'new page:', newPage);
+                  setCurrentPage(newPage);
+                }}
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               >
