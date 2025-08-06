@@ -218,6 +218,14 @@ export class MemoryStorage implements IStorage {
   async getTrendingGalleries(limit = 10): Promise<Gallery[]> {
     await this.loadData();
     
+    // Initialize some view counts if empty (to simulate trending behavior)
+    if (Object.keys(this.viewCounts).length === 0 && this.galleries.length > 0) {
+      this.galleries.forEach((gallery, index) => {
+        // Simulate higher view counts for first few galleries
+        this.viewCounts[gallery.slug] = Math.max(1, 100 - (index * 5) + Math.floor(Math.random() * 20));
+      });
+    }
+    
     // Sort by view count and recent date
     const trending = [...this.galleries]
       .sort((a, b) => {

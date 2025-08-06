@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
@@ -8,13 +8,16 @@ import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import { updatePageMeta } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
 import { fetchGalleryData } from "@/lib/api-client";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import type { Gallery } from "@shared/schema";
 
 export default function Home() {
   const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   const [galleryData, setGalleryData] = useState<any>(null);
+  const [displayedPosts, setDisplayedPosts] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
+  const postsPerPage = 12;
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Load gallery data with complete models, categories, tags
   useEffect(() => {
@@ -41,14 +44,39 @@ export default function Home() {
 
   const handleFiltersChange = (posts: Gallery[]) => {
     setFilteredPosts(posts);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
+    // Reset displayed posts to first page
+    setDisplayedPosts(posts.slice(0, postsPerPage));
   };
 
-  // Pagination logic
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = filteredPosts.slice(startIndex, endIndex);
+  // Update displayed posts when filteredPosts or currentPage changes
+  useEffect(() => {
+    if (filteredPosts.length > 0) {
+      const endIndex = currentPage * postsPerPage;
+      setDisplayedPosts(filteredPosts.slice(0, endIndex));
+    }
+  }, [filteredPosts, currentPage, postsPerPage]);
+
+  // Infinite scroll logic
+  const hasNextPage = useMemo(() => {
+    return currentPage * postsPerPage < filteredPosts.length;
+  }, [currentPage, postsPerPage, filteredPosts.length]);
+
+  const fetchNextPage = async () => {
+    if (isLoadingMore || !hasNextPage) return;
+    
+    setIsLoadingMore(true);
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setCurrentPage(prev => prev + 1);
+    setIsLoadingMore(false);
+  };
+
+  const infiniteScrollRef = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage: isLoadingMore,
+    fetchNextPage
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -96,41 +124,39 @@ export default function Home() {
               <div className="text-lg text-muted-foreground">Loading galleries...</div>
             </div>
           ) : (
-            <GalleryGrid 
-              posts={currentPosts} 
-              title="Latest Galleries"
-              description="Discover our newest photo collections with full-size images"
-            />
-          )}
-          
-          {/* Mid-scroll Ad after first 3 posts */}
-          {currentPosts.length > 3 && (
-            <AdBanner position="middle" className="my-12" />
-          )}
-          
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-12">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              >
-                Previous
-              </button>
+            <>
+              <GalleryGrid 
+                posts={displayedPosts} 
+                title="Latest Galleries"
+                description="Discover our newest photo collections with full-size images"
+              />
               
-              <span className="text-gray-600 dark:text-gray-400">
-                Page {currentPage} of {totalPages}
-              </span>
+              {/* Mid-scroll Ad after displaying several posts */}
+              {displayedPosts.length > 6 && (
+                <AdBanner position="middle" className="my-12" />
+              )}
               
-              <button
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              >
-                Next
-              </button>
-            </div>
+              {/* Loading indicator */}
+              {isLoadingMore && (
+                <div className="flex justify-center items-center py-8">
+                  <div className="text-lg text-muted-foreground">Loading more galleries...</div>
+                </div>
+              )}
+              
+              {/* Infinite scroll trigger */}
+              {hasNextPage && (
+                <div ref={infiniteScrollRef} className="h-4" />
+              )}
+              
+              {/* End of results message */}
+              {!hasNextPage && displayedPosts.length > 0 && (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400">
+                    You've reached the end of our gallery collection
+                  </p>
+                </div>
+              )}
+            </>
           )}
           
           {/* Bottom Ad */}

@@ -5,6 +5,10 @@ A modern photo gallery application featuring galleries of models, with comprehen
 
 ## Recent Changes
 - **2025-08-06**: Successfully completed migration from Replit Agent to standard Replit environment
+- **2025-08-06**: Implemented infinite scroll functionality on homepage for better UX
+- **2025-08-06**: Fixed trending section to show actual galleries with simulated view counts
+- **2025-08-06**: Enhanced homepage to load 12 galleries initially with infinite scroll loading
+- **2025-08-06**: Created custom useInfiniteScroll hook for scroll pagination
 - **2025-08-06**: Fixed search results navigation to use proper routing instead of window.location
 - **2025-08-06**: Updated gallery cards to open lightbox when clicking images
 - **2025-08-06**: Implemented full-size images in masonry grid layout on homepage
