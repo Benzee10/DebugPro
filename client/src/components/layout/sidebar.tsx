@@ -27,10 +27,27 @@ export function Sidebar({ posts, galleryData, onFiltersChange }: SidebarProps) {
   const { filters, updateFilter, filteredPosts } = useSearch(posts);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Update parent when filters change
+  // Track if this is the initial load to avoid triggering filter changes on mount
+  const [isInitialized, setIsInitialized] = React.useState(false);
+  const prevFiltersRef = React.useRef<any>(null);
+  
+  // Update parent only when actual filters change, not on initial load or when filteredPosts change
   React.useEffect(() => {
-    onFiltersChange?.(filteredPosts);
-  }, [filteredPosts, onFiltersChange]);
+    if (!isInitialized) {
+      // On first load, just set the filtered posts without triggering pagination reset
+      onFiltersChange?.(filteredPosts);
+      prevFiltersRef.current = { ...filters };
+      setIsInitialized(true);
+      return;
+    }
+    
+    const filtersChanged = JSON.stringify(prevFiltersRef.current) !== JSON.stringify(filters);
+    if (filtersChanged) {
+      console.log('Filters actually changed, updating parent');
+      prevFiltersRef.current = { ...filters };
+      onFiltersChange?.(filteredPosts);
+    }
+  }, [filters, filteredPosts, onFiltersChange, isInitialized]);
 
   const modelCounts = galleryData.models.reduce((acc, model) => {
     acc[model.name] = posts.filter(post => post.model === model.slug).length;

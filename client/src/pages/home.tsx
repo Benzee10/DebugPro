@@ -41,6 +41,7 @@ export default function Home() {
   }, []);
 
   const handleFiltersChange = (posts: Gallery[]) => {
+    console.log('Filters changed, resetting to page 1. Posts count:', posts.length);
     setFilteredPosts(posts);
     setCurrentPage(1); // Reset to first page when filters change
   };
