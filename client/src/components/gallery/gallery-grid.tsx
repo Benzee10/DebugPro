@@ -49,22 +49,25 @@ export function GalleryGrid({ posts, title = "Featured Galleries", description =
 
   return (
     <>
-      {/* Hero Section */}
-      <div className="mb-8">
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
-          <p className="text-gray-600 dark:text-gray-400">{description}</p>
+      {/* Hero Section - only show if title is provided */}
+      {title && (
+        <div className="mb-8">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
+            <p className="text-gray-600 dark:text-gray-400">{description}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Grid layout for galleries - using full-size images with masonry layout */}
-      <div className="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div className="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-6">
         {posts.map((post) => (
-          <GalleryCard
-            key={post.slug}
-            post={post}
-            onImageClick={openLightbox}
-          />
+          <div key={post.slug} className="masonry-item">
+            <GalleryCard
+              post={post}
+              onImageClick={openLightbox}
+            />
+          </div>
         ))}
       </div>
 

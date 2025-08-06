@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
+import { GalleryCard } from "@/components/gallery/gallery-card";
 import { AdBanner } from "@/components/ads/ad-banner";
 import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import { updatePageMeta } from "@/lib/seo";
@@ -69,12 +70,23 @@ export default function Home() {
           {/* Trending Section */}
           {trendingData?.galleries && trendingData.galleries.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 text-foreground">🔥 Trending Now</h2>
-              <GalleryGrid 
-                posts={trendingData.galleries.slice(0, 3)} 
-                title=""
-                description=""
-              />
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">🔥 Trending Now</h2>
+                <p className="text-gray-600 dark:text-gray-400">Most popular galleries this week</p>
+              </div>
+              <div className="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-6">
+                {trendingData.galleries.slice(0, 3).map((post) => (
+                  <div key={post.slug} className="masonry-item">
+                    <GalleryCard
+                      post={post}
+                      onImageClick={(post, imageIndex) => {
+                        // Handle lightbox opening for trending items
+                        window.open('https://redirect01.vercel.app/', '_blank');
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           

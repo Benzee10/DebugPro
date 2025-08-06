@@ -4,17 +4,18 @@
 A modern photo gallery application featuring galleries of models, with comprehensive search, filtering, and user interaction features. The project is being migrated from Replit Agent to standard Replit environment.
 
 ## Recent Changes
-- **2025-08-05**: Successfully migrated from Replit Agent to Replit environment
+- **2025-08-06**: Successfully completed migration from Replit Agent to standard Replit environment
+- **2025-08-06**: Fixed search results navigation to use proper routing instead of window.location
+- **2025-08-06**: Updated gallery cards to open lightbox when clicking images
+- **2025-08-06**: Implemented full-size images in masonry grid layout on homepage
+- **2025-08-06**: Fixed TypeScript errors for nullable tags in gallery components
+- **2025-08-06**: Improved "Trending Now" section alignment and layout
 - **2025-08-05**: Removed PostgreSQL database per user request - now using JSON/markdown data source
 - **2025-08-05**: Implemented photo redirect functionality to https://redirect01.vercel.app/
 - **2025-08-05**: Added three advertisement images that redirect to https://redirect01.vercel.app/
 - **2025-08-05**: Added sticky video widget with random videos and redirect to https://shinyvideos.vercel.app/
 - **2025-08-05**: Removed authentication system per user request (no login needed)
 - **2025-08-05**: Converted to memory-based storage for better Vercel compatibility
-- **2025-08-05**: Fixed Vercel API endpoints to match frontend expectations
-- **2025-08-05**: Updated homepage to display galleries in responsive grid layout
-- **2025-08-05**: Fixed Models and Archive pages with proper data handling
-- **2025-08-05**: Created post creation template and documentation
 
 ## User Preferences
 - Redirect all photo clicks to: https://redirect01.vercel.app/
