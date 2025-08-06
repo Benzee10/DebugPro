@@ -1,4 +1,5 @@
 import { useParams } from "wouter";
+import { useLocation } from "wouter";
 import { Header } from "@/components/layout/header";
 import { Lightbox } from "@/components/gallery/lightbox";
 import { AdBanner } from "@/components/ads/ad-banner";
@@ -13,17 +14,22 @@ import { useState, useEffect } from "react";
 
 export default function GalleryPage() {
   const params = useParams();
+  const [, setLocation] = useLocation();
   const slug = params["*"] || "";
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   // Load post data
   useEffect(() => {
     fetchGalleryPost(slug).then(postData => {
       setPost(postData);
       setLoading(false);
+      // Initialize favorite count with random number for demo
+      setFavoriteCount(Math.floor(Math.random() * 50) + 10);
     }).catch(error => {
       console.error('Error loading gallery post:', error);
       setLoading(false);
@@ -88,6 +94,16 @@ export default function GalleryPage() {
     }
   };
 
+  const toggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+    setFavoriteCount(prev => isFavorited ? prev - 1 : prev + 1);
+  };
+
+  const handleTagClick = (tag: string) => {
+    // Navigate to home page with tag filter
+    setLocation(`/?tag=${encodeURIComponent(tag)}`);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -118,10 +134,15 @@ export default function GalleryPage() {
               <Images size={16} />
               <span>{post.images.length} photos</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Heart size={16} />
-              <span>{Math.floor(Math.random() * 50) + 10}</span>
-            </div>
+            <button 
+              onClick={toggleFavorite}
+              className={`flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded-md transition-colors ${
+                isFavorited ? 'text-red-500' : 'text-gray-600 dark:text-gray-400'
+              }`}
+            >
+              <Heart size={16} fill={isFavorited ? 'currentColor' : 'none'} />
+              <span>{favoriteCount}</span>
+            </button>
           </div>
           
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -139,7 +160,12 @@ export default function GalleryPage() {
             
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag: string) => (
-                <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                <Badge 
+                  key={tag} 
+                  variant="secondary" 
+                  className="flex items-center gap-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  onClick={() => handleTagClick(tag)}
+                >
                   <Tag size={12} />
                   {tag}
                 </Badge>
