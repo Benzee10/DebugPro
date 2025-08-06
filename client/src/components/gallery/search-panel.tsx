@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { usePagefind } from "@/hooks/use-pagefind";
 import { fetchGalleryData } from "@/lib/api-client";
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import type { GalleryPost, GalleryData } from "@shared/schema";
 
 interface SearchPanelProps {
@@ -15,6 +16,7 @@ export function SearchPanel({ onClose, onResults }: SearchPanelProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
+  const [, setLocation] = useLocation();
   const { searchResults, isSearching, search } = usePagefind(galleryData?.posts || []);
 
   // Load gallery data from API
@@ -97,7 +99,8 @@ export function SearchPanel({ onClose, onResults }: SearchPanelProps) {
                 <button
                   key={result.post.slug}
                   onClick={() => {
-                    window.location.href = `/gallery/${result.post.slug}`;
+                    setLocation(`/gallery/${result.post.slug}`);
+                    onClose?.();
                   }}
                   className="w-full flex items-start gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors text-left"
                 >

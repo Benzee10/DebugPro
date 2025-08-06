@@ -8,9 +8,10 @@ import type { Gallery } from "@shared/schema";
 interface GalleryCardProps {
   post: Gallery;
   onClick?: () => void;
+  onImageClick?: (post: Gallery, imageIndex: number) => void;
 }
 
-export function GalleryCard({ post, onClick }: GalleryCardProps) {
+export function GalleryCard({ post, onClick, onImageClick }: GalleryCardProps) {
   const formattedDate = post.publishedAt ? format(new Date(post.publishedAt), "MMM d, yyyy") : format(new Date(), "MMM d, yyyy");
   const imageCount = Array.isArray(post.images) ? post.images.length : 0;
   
@@ -43,22 +44,27 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
     return colors[category as keyof typeof colors] || "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300";
   };
 
-  const handleCardClick = () => {
-    // Redirect all photo clicks to the specified URL
-    window.open('https://redirect01.vercel.app/', '_blank');
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onImageClick) {
+      onImageClick(post, 0);
+    } else {
+      // Default behavior: redirect to external URL
+      window.open('https://redirect01.vercel.app/', '_blank');
+    }
   };
 
   return (
-    <article className="masonry-item group cursor-pointer" onClick={handleCardClick}>
+    <article className="masonry-item group">
       <Card className="bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden card-hover">
         {/* Cover Image */}
         <div className="relative overflow-hidden">
           <img
             src={post.cover}
             alt={post.title}
-            className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500 cursor-pointer"
             loading="lazy"
-            onClick={() => window.open('https://redirect01.vercel.app/', '_blank')}
+            onClick={handleImageClick}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="absolute bottom-4 left-4 right-4">
@@ -108,7 +114,7 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
 
           <div className="flex items-center justify-between">
             <div className="flex flex-wrap gap-1">
-              {post.tags.slice(0, 2).map((tag) => (
+              {(post.tags || []).slice(0, 2).map((tag) => (
                 <Badge
                   key={tag}
                   variant="secondary"
@@ -117,12 +123,12 @@ export function GalleryCard({ post, onClick }: GalleryCardProps) {
                   {tag}
                 </Badge>
               ))}
-              {post.tags.length > 2 && (
+              {(post.tags || []).length > 2 && (
                 <Badge
                   variant="secondary"
                   className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
                 >
-                  +{post.tags.length - 2}
+                  +{(post.tags || []).length - 2}
                 </Badge>
               )}
             </div>

@@ -87,7 +87,7 @@ export default function Home() {
             <GalleryGrid 
               posts={currentPosts} 
               title="Latest Galleries"
-              description="Discover our newest photo collections"
+              description="Discover our newest photo collections with full-size images"
             />
           )}
           
