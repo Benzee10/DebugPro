@@ -8,10 +8,10 @@ import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 import { updatePageMeta } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
 import { fetchGalleryData } from "@/lib/api-client";
-import type { Gallery } from "@shared/schema";
+import type { Gallery, GalleryPost } from "@shared/schema";
 
 export default function Home() {
-  const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<GalleryPost[]>([]);
   const [galleryData, setGalleryData] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [initialTagFilter, setInitialTagFilter] = useState<string | null>(null);
@@ -60,7 +60,7 @@ export default function Home() {
     updatePageMeta();
   }, []);
 
-  const handleFiltersChange = (posts: Gallery[]) => {
+  const handleFiltersChange = (posts: GalleryPost[]) => {
     setFilteredPosts(posts);
     setCurrentPage(1); // Reset to first page when filters change
   };
@@ -102,17 +102,31 @@ export default function Home() {
                 <p className="text-gray-600 dark:text-gray-400">Most popular galleries this week</p>
               </div>
               <div className="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-6">
-                {trendingData.galleries.slice(0, 5).map((post) => (
-                  <div key={post.slug} className="masonry-item">
-                    <GalleryCard
-                      post={post}
-                      onImageClick={(post, imageIndex) => {
-                        // Handle lightbox opening for trending items
-                        window.open('https://redirect01.vercel.app/', '_blank');
-                      }}
-                    />
-                  </div>
-                ))}
+                {trendingData.galleries.slice(0, 5).map((gallery) => {
+                  // Convert Gallery to GalleryPost format
+                  const post: GalleryPost = {
+                    title: gallery.title,
+                    description: gallery.description,
+                    date: gallery.publishedAt?.toISOString() || new Date().toISOString(),
+                    tags: gallery.tags || [],
+                    model: gallery.model,
+                    category: gallery.category,
+                    cover: gallery.cover,
+                    slug: gallery.slug,
+                    images: gallery.images
+                  };
+                  return (
+                    <div key={gallery.slug} className="masonry-item">
+                      <GalleryCard
+                        post={post}
+                        onImageClick={(post, imageIndex) => {
+                          // Handle lightbox opening for trending items
+                          window.open('https://redirect01.vercel.app/', '_blank');
+                        }}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

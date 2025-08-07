@@ -1,9 +1,9 @@
 import { useLocation } from "wouter";
 import { GalleryCard } from "./gallery-card";
-import type { Gallery } from "@shared/schema";
+import type { GalleryPost } from "@shared/schema";
 
 interface GalleryGridProps {
-  posts: Gallery[];
+  posts: GalleryPost[];
   title?: string;
   description?: string;
 }

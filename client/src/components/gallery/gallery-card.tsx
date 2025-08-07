@@ -5,21 +5,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
-import type { Gallery } from "@shared/schema";
+import type { GalleryPost } from "@shared/schema";
 
 interface GalleryCardProps {
-  post: Gallery;
+  post: GalleryPost;
   onClick?: () => void;
-  onImageClick?: (post: Gallery, imageIndex: number) => void;
+  onImageClick?: (post: GalleryPost, imageIndex: number) => void;
 }
 
 export function GalleryCard({ post, onClick, onImageClick }: GalleryCardProps) {
   const { accentHue } = useTheme();
-  const formattedDate = post.publishedAt ? format(new Date(post.publishedAt), "MMM d, yyyy") : format(new Date(), "MMM d, yyyy");
+  const formattedDate = format(new Date(post.date), "MMM d, yyyy");
   const imageCount = Array.isArray(post.images) ? post.images.length : 0;
   
-  // Use rating data from database
-  const likes = post.ratingCount || 0;
+  // Use default likes since GalleryPost doesn't have ratingCount
+  const likes = 0;
 
   const getModelInitial = (model: string) => model.charAt(0).toUpperCase();
   
