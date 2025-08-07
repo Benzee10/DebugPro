@@ -55,9 +55,9 @@ export class MemoryStorage implements IStorage {
   private lastLoaded = 0;
   
   private async loadData() {
-    // Load data every 5 minutes or on first load
+    // Load data every 5 seconds or on first load
     const now = Date.now();
-    if (now - this.lastLoaded > 5 * 60 * 1000 || this.galleries.length === 0) {
+    if (now - this.lastLoaded > 5 * 1000 || this.galleries.length === 0) {
       try {
         // Try loading from JSON first (faster)
         const jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
