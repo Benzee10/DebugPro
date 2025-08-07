@@ -4,6 +4,8 @@
 A modern photo gallery application featuring galleries of models, with comprehensive search, filtering, and user interaction features. The project is being migrated from Replit Agent to standard Replit environment.
 
 ## Recent Changes
+- **2025-08-07**: Optimized data loading for Vercel deployment - posts appear immediately after build completion
+- **2025-08-07**: Fixed new post loading issue and implemented smart caching (5 seconds in dev, permanent in production)
 - **2025-08-06**: Fixed favorite button and tag clicking functionality in gallery posts
 - **2025-08-06**: Removed generic image captions ("Image 1", "Image 2") from gallery posts
 - **2025-08-06**: Added "View Gallery" buttons to gallery cards that follow theme color slider

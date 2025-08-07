@@ -55,9 +55,15 @@ export class MemoryStorage implements IStorage {
   private lastLoaded = 0;
   
   private async loadData() {
-    // Load data every 5 seconds or on first load
+    // In production (Vercel), load once and cache permanently
+    // In development, reload every 5 seconds for live updates
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
     const now = Date.now();
-    if (now - this.lastLoaded > 5 * 1000 || this.galleries.length === 0) {
+    const shouldReload = isProduction 
+      ? this.galleries.length === 0 // Only load once in production
+      : (now - this.lastLoaded > 5 * 1000 || this.galleries.length === 0); // Reload every 5s in dev
+    
+    if (shouldReload) {
       try {
         // Try loading from JSON first (faster)
         const jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
@@ -69,6 +75,7 @@ export class MemoryStorage implements IStorage {
           this.galleries = await loadGalleryPostsFromMarkdown();
         }
         this.lastLoaded = now;
+        console.log(`Data loaded in ${isProduction ? 'production' : 'development'} mode - ${this.galleries.length} galleries`);
       } catch (error) {
         console.error('Error loading gallery data:', error);
         // Fallback to empty array
