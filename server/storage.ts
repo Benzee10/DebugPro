@@ -65,14 +65,28 @@ export class MemoryStorage implements IStorage {
     
     if (shouldReload) {
       try {
-        // Try loading from JSON first (faster)
-        const jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
+        // In production (Vercel), always try JSON first as markdown files may not be accessible
+        let jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
+        
+        // Check multiple possible JSON locations for Vercel compatibility
+        if (!fs.existsSync(jsonPath)) {
+          jsonPath = path.join(__dirname, '..', 'api', 'gallery-data.json');
+        }
+        if (!fs.existsSync(jsonPath)) {
+          jsonPath = path.join(process.cwd(), 'dist', 'api', 'gallery-data.json');
+        }
+        
         if (fs.existsSync(jsonPath)) {
+          console.log(`Loading gallery data from: ${jsonPath}`);
           const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
           this.galleries = jsonData.posts || [];
-        } else {
-          // Fallback to markdown loading
+        } else if (!isProduction) {
+          // Only fallback to markdown loading in development
+          console.log('JSON not found, loading from markdown files (development only)');
           this.galleries = await loadGalleryPostsFromMarkdown();
+        } else {
+          console.error('Gallery data JSON file not found in production!');
+          this.galleries = [];
         }
         this.lastLoaded = now;
         console.log(`Data loaded in ${isProduction ? 'production' : 'development'} mode - ${this.galleries.length} galleries`);
