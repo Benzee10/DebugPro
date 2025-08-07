@@ -15,7 +15,9 @@ export default function HomeNew() {
         console.log('Response status:', response.status);
         
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+          const errorText = await response.text();
+          console.error('API Error:', errorText);
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
         
         const data = await response.json();
