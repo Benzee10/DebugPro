@@ -154,11 +154,19 @@ export default function Home() {
               <div className="text-lg text-muted-foreground">Loading galleries...</div>
             </div>
           ) : (
-            <GalleryGrid 
-              posts={currentPosts} 
-              title="Latest Galleries"
-              description="Discover our newest photo collections with full-size images"
-            />
+            <>
+              {/* Debug info */}
+              <div className="mb-4 p-4 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg text-sm">
+                Debug: Gallery Data: {galleryData.posts?.length || 0} posts, 
+                Filtered: {filteredPosts.length}, 
+                Current Page: {currentPosts.length}
+              </div>
+              <GalleryGrid 
+                posts={currentPosts.length > 0 ? currentPosts : galleryData.posts?.slice(0, 12) || []} 
+                title="Latest Galleries"
+                description="Discover our newest photo collections with full-size images"
+              />
+            </>
           )}
           
           {/* Mid-scroll Ad after first 3 posts */}

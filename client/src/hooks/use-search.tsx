@@ -24,12 +24,14 @@ export function useSearch(posts: GalleryPost[]) {
   }, [posts]);
 
   const filteredPosts = useMemo(() => {
+    console.log('useSearch filtering:', { postsLength: posts.length, filters });
     let result = posts;
 
     // Text search
     if (filters.query && filters.query.trim()) {
       const searchResults = fuse.search(filters.query);
       result = searchResults.map(item => item.item);
+      console.log('After text search:', result.length);
     }
 
     // Model filter
@@ -98,6 +100,7 @@ export function useSearch(posts: GalleryPost[]) {
       }
     });
 
+    console.log('Final filtered result:', result.length);
     return result;
   }, [posts, filters, fuse]);
 

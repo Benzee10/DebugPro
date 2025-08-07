@@ -45,8 +45,10 @@ export const Sidebar = forwardRef<SidebarRef, SidebarProps>(({ posts, galleryDat
   
   // Update parent only when actual filters change, not on initial load or when filteredPosts change
   React.useEffect(() => {
+    console.log('Sidebar effect:', { isInitialized, filteredPostsLength: filteredPosts.length, filters });
     if (!isInitialized) {
       // On first load, just set the filtered posts without triggering pagination reset
+      console.log('First load - setting filtered posts:', filteredPosts.length);
       onFiltersChange?.(filteredPosts);
       prevFiltersRef.current = { ...filters };
       setIsInitialized(true);
@@ -55,6 +57,7 @@ export const Sidebar = forwardRef<SidebarRef, SidebarProps>(({ posts, galleryDat
     
     const filtersChanged = JSON.stringify(prevFiltersRef.current) !== JSON.stringify(filters);
     if (filtersChanged) {
+      console.log('Filters changed - updating filtered posts:', filteredPosts.length);
       prevFiltersRef.current = { ...filters };
       onFiltersChange?.(filteredPosts);
     }
