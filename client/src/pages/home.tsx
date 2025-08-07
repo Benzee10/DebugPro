@@ -34,7 +34,14 @@ export default function Home() {
 
   // Load gallery data with complete models, categories, tags
   useEffect(() => {
+    console.log('Loading gallery data...');
     fetchGalleryData().then(data => {
+      console.log('Gallery data loaded:', {
+        postsCount: data.posts?.length || 0,
+        modelsCount: data.models?.length || 0,
+        categoriesCount: data.categories?.length || 0,
+        tagsCount: data.tags?.length || 0
+      });
       setGalleryData(data);
       setFilteredPosts(data.posts || []);
 
@@ -61,6 +68,7 @@ export default function Home() {
   }, []);
 
   const handleFiltersChange = (posts: GalleryPost[]) => {
+    console.log('Filters changed, new filtered posts count:', posts.length);
     setFilteredPosts(posts);
     setCurrentPage(1); // Reset to first page when filters change
   };
@@ -70,6 +78,15 @@ export default function Home() {
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
   const currentPosts = filteredPosts.slice(startIndex, endIndex);
+  
+  console.log('Pagination info:', {
+    filteredPostsLength: filteredPosts.length,
+    totalPages,
+    currentPage,
+    startIndex,
+    endIndex,
+    currentPostsLength: currentPosts.length
+  });
   
 
   
@@ -107,7 +124,7 @@ export default function Home() {
                   const post: GalleryPost = {
                     title: gallery.title,
                     description: gallery.description,
-                    date: gallery.publishedAt?.toISOString() || new Date().toISOString(),
+                    date: gallery.publishedAt ? (typeof gallery.publishedAt === 'string' ? gallery.publishedAt : new Date(gallery.publishedAt).toISOString()) : new Date().toISOString(),
                     tags: gallery.tags || [],
                     model: gallery.model,
                     category: gallery.category,
