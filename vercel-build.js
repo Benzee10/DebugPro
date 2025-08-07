@@ -80,6 +80,12 @@ if (!fs.existsSync(apiDir)) {
   fs.mkdirSync(apiDir, { recursive: true });
 }
 
+// Ensure galleries subdirectory exists
+const galleriesDir = path.join(apiDir, 'galleries');
+if (!fs.existsSync(galleriesDir)) {
+  fs.mkdirSync(galleriesDir, { recursive: true });
+}
+
 fs.writeFileSync(
   path.join(apiDir, 'gallery-data.json'),
   JSON.stringify(galleryData, null, 2)

@@ -4,8 +4,9 @@
 A modern photo gallery application featuring galleries of models, with comprehensive search, filtering, and user interaction features. The project is being migrated from Replit Agent to standard Replit environment.
 
 ## Recent Changes  
+- **2025-08-07**: Fixed Vercel FUNCTION_INVOCATION_FAILED error with proper serverless API structure
 - **2025-08-07**: Rebuilt app with simplified data flow - galleries now display successfully on Replit
-- **2025-08-07**: Created Vercel deployment configuration with serverless API functions
+- **2025-08-07**: Created Vercel deployment configuration with individual serverless functions
 - **2025-08-07**: Fixed data loading issues by creating clean, direct API fetch without complex filtering
 - **2025-08-07**: Successfully completed migration from Replit Agent to standard Replit environment with type compatibility fixes
 - **2025-08-07**: Fixed type mismatches between Gallery (database) and GalleryPost (legacy) schemas for seamless data flow
