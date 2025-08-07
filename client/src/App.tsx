@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { StickyVideoWidget } from "@/components/ads/sticky-video-widget";
 
 import Home from "@/pages/home";
+import HomeNew from "@/pages/home-new";
 import GalleryPage from "@/pages/gallery";
 import ModelPage from "@/pages/model";
 import ModelsPage from "@/pages/models";
@@ -16,7 +17,8 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={HomeNew} />
+      <Route path="/old" component={Home} />
       <Route path="/gallery/*" component={GalleryPage} />
       <Route path="/models" component={ModelsPage} />
       <Route path="/model/:slug" component={ModelPage} />
