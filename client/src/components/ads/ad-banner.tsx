@@ -5,9 +5,9 @@ interface AdBannerProps {
 
 export function AdBanner({ position, className = "" }: AdBannerProps) {
   const adImages = {
-    top: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLnNCb3lbPZ-fHB1I_MsM42u2qw6ocRM5Pfg&s",
-    middle: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVESb6AsPFDWPpxAl9oPEP29E1cP2icK4NBo9Od4ruHBy2fhMpFy5r5TayMHOf5lI_O7Q&usqp=CAU",
-    bottom: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZaD3vqGrLWH-PMPS3u-lrh0GK8igAOb_F_i-_zAb9cLsa8bGWdPYl-BVmdx-j7iIBtc&usqp=CAU"
+    top: "https://i.postimg.cc/QCgjZR6S/preview-1-2.jpg",
+    middle: "https://i.postimg.cc/bvdYSVJN/preview-1-1.jpg",
+    bottom: "https://i.postimg.cc/nhFhphfm/preview-1.jpg"
   };
 
   const handleClick = () => {
