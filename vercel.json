@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "tsx scripts/export-gallery-data.js && vite build --config vite.config.production.ts",
+  "buildCommand": "node scripts/export-gallery-data-build.cjs && vite build --config vite.config.production.ts",
   "outputDirectory": "dist/public",
   "routes": [
     {
