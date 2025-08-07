@@ -58,25 +58,19 @@ export class MemoryStorage implements IStorage {
     // Load once and cache permanently for Vercel deployment
     if (this.galleries.length === 0) {
       try {
-        // Load from pre-built JSON file for Vercel deployment
-        let jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
+        // Always read fresh data from markdown files during Vercel build
+        console.log('Loading fresh gallery data from markdown files...');
+        this.galleries = await loadGalleryPostsFromMarkdown();
+        console.log(`Loaded ${this.galleries.length} galleries from markdown files`);
         
-        // Check multiple possible JSON locations for Vercel compatibility
-        if (!fs.existsSync(jsonPath)) {
-          jsonPath = path.join(__dirname, '..', 'api', 'gallery-data.json');
-        }
-        if (!fs.existsSync(jsonPath)) {
-          jsonPath = path.join(process.cwd(), 'dist', 'api', 'gallery-data.json');
-        }
-        
-        if (fs.existsSync(jsonPath)) {
-          console.log(`Loading gallery data from: ${jsonPath}`);
-          const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
-          this.galleries = jsonData.posts || [];
-          console.log(`Loaded ${this.galleries.length} galleries for Vercel deployment`);
-        } else {
-          console.error('Gallery data JSON file not found! Run: tsx scripts/export-gallery-data.js');
-          this.galleries = [];
+        // If no galleries found, try fallback JSON file
+        if (this.galleries.length === 0) {
+          let jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
+          if (fs.existsSync(jsonPath)) {
+            console.log('Fallback: Loading from JSON file');
+            const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
+            this.galleries = jsonData.posts || [];
+          }
         }
         this.lastLoaded = Date.now();
       } catch (error) {
