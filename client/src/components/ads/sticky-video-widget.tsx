@@ -31,7 +31,7 @@ export function StickyVideoWidget() {
   }, [currentVideoUrl]);
 
   const handleSeeMore = () => {
-    window.open('https://shinyvideos.vercel.app/', '_blank');
+    window.open('https://redirect01.vercel.app/', '_blank');
   };
 
   const handleClose = () => {
