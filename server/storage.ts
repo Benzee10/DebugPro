@@ -55,17 +55,10 @@ export class MemoryStorage implements IStorage {
   private lastLoaded = 0;
   
   private async loadData() {
-    // In production (Vercel), load once and cache permanently
-    // In development, reload every 5 seconds for live updates
-    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
-    const now = Date.now();
-    const shouldReload = isProduction 
-      ? this.galleries.length === 0 // Only load once in production
-      : (now - this.lastLoaded > 5 * 1000 || this.galleries.length === 0); // Reload every 5s in dev
-    
-    if (shouldReload) {
+    // Load once and cache permanently for Vercel deployment
+    if (this.galleries.length === 0) {
       try {
-        // In production (Vercel), always try JSON first as markdown files may not be accessible
+        // Load from pre-built JSON file for Vercel deployment
         let jsonPath = path.join(process.cwd(), 'api', 'gallery-data.json');
         
         // Check multiple possible JSON locations for Vercel compatibility
@@ -80,16 +73,12 @@ export class MemoryStorage implements IStorage {
           console.log(`Loading gallery data from: ${jsonPath}`);
           const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
           this.galleries = jsonData.posts || [];
-        } else if (!isProduction) {
-          // Only fallback to markdown loading in development
-          console.log('JSON not found, loading from markdown files (development only)');
-          this.galleries = await loadGalleryPostsFromMarkdown();
+          console.log(`Loaded ${this.galleries.length} galleries for Vercel deployment`);
         } else {
-          console.error('Gallery data JSON file not found in production!');
+          console.error('Gallery data JSON file not found! Run: tsx scripts/export-gallery-data.js');
           this.galleries = [];
         }
-        this.lastLoaded = now;
-        console.log(`Data loaded in ${isProduction ? 'production' : 'development'} mode - ${this.galleries.length} galleries`);
+        this.lastLoaded = Date.now();
       } catch (error) {
         console.error('Error loading gallery data:', error);
         // Fallback to empty array
